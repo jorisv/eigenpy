@@ -2,7 +2,7 @@ name: Check-changelog
 on:
   pull_request:
     branches:
-      - devel
+      - topic/test
 jobs:
   check-changelog:
     name: Check changelog action
