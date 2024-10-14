@@ -75,10 +75,12 @@ python = "3.12.*"
 [feature.py39.dependencies]
 python = "3.9.*"
 
-# Use clang-cl on Windows
+# Use clang-cl on Windows.
+# We must use scripts instead of env to setup CC and CXX
+# to avoid cxx-compiler to overwrite them.
 [feature.clang-cl]
 platforms = ["win-64"]
-activation = { env = { CC = "clang-cl", CXX = "clang-cl" } }
+activation = { scripts = ["scripts/activation_clang_cl.bat"] }
 
 [environments]
 default = { features = ["py312"], solve-group = "py312" }
@@ -89,7 +91,7 @@ py39 = { features = ["py39"], solve-group = "py39" }
 all = { features = ["all", "py312"], solve-group = "py312" }
 all-py39 = { features = ["all", "py39"], solve-group = "py39" }
 all-clang-cl = { features = [
-  "clang-cl",
   "all",
+  "clang-cl",
   "py312",
 ], solve-group = "py312" }
