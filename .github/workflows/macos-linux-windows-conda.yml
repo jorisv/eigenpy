@@ -76,7 +76,7 @@ jobs:
 
     - name: Build EigenPy [MacOS/Linux/Windows]
       env:
-        CMAKE_BUILD_PARALLEL_LEVEL: 4
+        CMAKE_BUILD_PARALLEL_LEVEL: 2
         EIGENPY_BUILD_TYPE: ${{ matrix.build_type }}
         EIGENPY_CXX_FLAGS: ${{ matrix.cxx_options }}
       run: |
