@@ -94,7 +94,7 @@ pixi run test
 ```
 
 The project will be built in the `build` directory.
-You can now run `pixi shell` and build the project with `cmake` and `ninja` manually.
+You can run `pixi shell` and build the project with `cmake` and `ninja` manually.
 
 ## Credits
 
