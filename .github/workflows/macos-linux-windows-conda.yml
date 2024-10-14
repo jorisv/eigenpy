@@ -80,7 +80,7 @@ jobs:
         EIGENPY_BUILD_TYPE: ${{ matrix.build_type }}
         EIGENPY_CXX_FLAGS: ${{ matrix.cxx_options }}
       run: |
-        pixi run -e ${{ matrix.environment }} test
+        pixi run -v -e ${{ matrix.environment }} test
 
   check:
     if: always()
