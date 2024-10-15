@@ -28,7 +28,10 @@ scripts = ["scripts/activation.sh"]
 scripts = ["scripts/activation.bat"]
 
 [tasks]
+# We must avoid to set CMAKE_CXX_FLAGS because of WIN32
+# https://discourse.cmake.org/t/strictly-appending-to-cmake-lang-flags/6478
 configure = { cmd = [
+  "CXXFLAGS=$EIGENPY_CXX_FLAGS",
   "cmake",
   "-G",
   "Ninja",
@@ -37,7 +40,6 @@ configure = { cmd = [
   "-S",
   ".",
   "-DCMAKE_BUILD_TYPE=$EIGENPY_BUILD_TYPE",
-  "-DCMAKE_CXX_FLAGS=$EIGENPY_CXX_FLAGS",
   "-DGENERATE_PYTHON_STUBS=$EIGENPY_PYTHON_STUBS",
   "-DBUILD_WITH_CHOLMOD_SUPPORT=$EIGENPY_CHOLMOD_SUPPORT",
   "-DBUILD_WITH_ACCELERATE_SUPPORT=$EIGENPY_ACCELERATE_SUPPORT",
