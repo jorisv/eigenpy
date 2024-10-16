@@ -13,9 +13,11 @@ cmake = ">=3.10"
 cxx-compiler = ">=1.7.0"
 ninja = ">=1.11"
 pkg-config = ">=0.29.2"
+git = ">=2.47.0"
 
 [dependencies]
-boost = ">=1.80.0"
+libboost-devel = ">=1.80.0"
+libboost-python-devel = ">=1.80.0"
 eigen = ">=3.4.0"
 numpy = ">=1.22.0"
 python = ">=3.9.0"
