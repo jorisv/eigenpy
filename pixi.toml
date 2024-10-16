@@ -70,8 +70,9 @@ activation = { env = { EIGENPY_ACCELERATE_SUPPORT = "ON" } }
 dependencies = { suitesparse = ">=5" }
 activation = { env = { EIGENPY_CHOLMOD_SUPPORT = "ON" } }
 
-[feature.all.target.osx-arm64]
-activation = { env = { EIGENPY_ACCELERATE_SUPPORT = "ON" } }
+# TODO Add accelerate when new Eigen version is released
+# [feature.all.target.osx-arm64]
+# activation = { env = { EIGENPY_CHOLMOD_SUPPORT = "ON", EIGENPY_ACCELERATE_SUPPORT = "ON" } }
 
 [feature.py312.dependencies]
 python = "3.12.*"
