@@ -63,16 +63,8 @@ activation = { env = { EIGENPY_CHOLMOD_SUPPORT = "ON" } }
 
 # Accelerate only work on Apple ARM platform
 [feature.accelerate]
-platforms = ["osx-arm64"]
+[feature.accelerate.target.osx-arm64]
 activation = { env = { EIGENPY_ACCELERATE_SUPPORT = "ON" } }
-
-[feature.all]
-dependencies = { suitesparse = ">=5" }
-activation = { env = { EIGENPY_CHOLMOD_SUPPORT = "ON" } }
-
-# TODO Add accelerate when new Eigen version is released
-# [feature.all.target.osx-arm64]
-# activation = { env = { EIGENPY_CHOLMOD_SUPPORT = "ON", EIGENPY_ACCELERATE_SUPPORT = "ON" } }
 
 [feature.py312.dependencies]
 python = "3.12.*"
@@ -93,10 +85,15 @@ lint = { features = ["lint"], solve-group = "py312" }
 cholmod = { features = ["cholmod", "py312"], solve-group = "py312" }
 accelerate = { features = ["accelerate", "py312"], solve-group = "py312" }
 py39 = { features = ["py39"], solve-group = "py39" }
-all = { features = ["all", "py312"], solve-group = "py312" }
-all-py39 = { features = ["all", "py39"], solve-group = "py39" }
+all = { features = ["cholmod", "accelerate", "py312"], solve-group = "py312" }
+all-py39 = { features = [
+  "cholmod",
+  "accelerate",
+  "py39",
+], solve-group = "py39" }
 all-clang-cl = { features = [
-  "all",
+  "cholmod",
+  "accelerate",
   "clang-cl",
   "py312",
 ], solve-group = "py312" }
