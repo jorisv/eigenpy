@@ -85,15 +85,11 @@ lint = { features = ["lint"], solve-group = "py312" }
 cholmod = { features = ["cholmod", "py312"], solve-group = "py312" }
 accelerate = { features = ["accelerate", "py312"], solve-group = "py312" }
 py39 = { features = ["py39"], solve-group = "py39" }
-all = { features = ["cholmod", "accelerate", "py312"], solve-group = "py312" }
-all-py39 = { features = [
-  "cholmod",
-  "accelerate",
-  "py39",
-], solve-group = "py39" }
+# Accelerate will only work in Eigen next release
+all = { features = ["cholmod", "py312"], solve-group = "py312" }
+all-py39 = { features = ["cholmod", "py39"], solve-group = "py39" }
 all-clang-cl = { features = [
   "cholmod",
-  "accelerate",
   "clang-cl",
   "py312",
 ], solve-group = "py312" }
