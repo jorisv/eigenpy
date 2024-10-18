@@ -45,7 +45,7 @@ configure = { cmd = [
   "-DGENERATE_PYTHON_STUBS=$EIGENPY_PYTHON_STUBS",
   "-DBUILD_WITH_CHOLMOD_SUPPORT=$EIGENPY_CHOLMOD_SUPPORT",
   "-DBUILD_WITH_ACCELERATE_SUPPORT=$EIGENPY_ACCELERATE_SUPPORT",
-], env = { EIGENPY_PYTHON_STUBS = "ON", EIGENPY_CHOLMOD_SUPPORT = "OFF", EIGENPY_ACCELERATE_SUPPORT = "OFF", EIGENPY_BUILD_TYPE = "Release" } }
+] }
 build = { cmd = "cmake --build build --target all", depends_on = ["configure"] }
 clean = { cmd = "rm -rf build" }
 test = { cmd = "ctest --test-dir build --output-on-failure", depends_on = [
