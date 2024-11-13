@@ -366,7 +366,8 @@ target_include_directories(
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
          $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-
+target_precompile_headers(${PROJECT_NAME} PRIVATE
+                          ${PROJECT_SOURCE_DIR}/include/eigenpy/pch.hpp)
 modernize_target_link_libraries(
   ${PROJECT_NAME}
   SCOPE
