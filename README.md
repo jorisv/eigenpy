@@ -42,17 +42,19 @@ You can easily install **EigenPy** from binaries.
 
 #### Add robotpkg apt repository
 
-1. Add robotpkg as source repository to apt:
+1. Register the authentication certificate of robotpkg:
 ```
-sudo sh -c "echo 'deb [arch=amd64] http://robotpkg.openrobots.org/packages/debian/pub $(lsb_release -cs) robotpkg' >> /etc/apt/sources.list.d/robotpkg.list"
+curl http://robotpkg.openrobots.org/packages/debian/robotpkg.asc | sudo tee /etc/apt/keyrings/robotpkg.asc
 ```
-2. Register the authentication certificate of robotpkg:
+2. Add robotpkg as source repository to apt:
 ```
-curl http://robotpkg.openrobots.org/packages/debian/robotpkg.key | sudo apt-key add -
+sudo tee /etc/apt/sources.list.d/robotpkg.list <<EOF
+deb [arch=amd64 signed-by=/etc/apt/keyrings/robotpkg.asc] http://robotpkg.openrobots.org/packages/debian/pub $(lsb_release -cs) robotpkg
+EOF
 ```
 3. You need to run at least one apt update to fetch the package descriptions:
 ```bash
-sudo apt-get update
+sudo apt update
 ```
 
 #### Install EigenPy
