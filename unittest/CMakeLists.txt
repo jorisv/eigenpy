@@ -145,6 +145,12 @@ add_python_eigenpy_lib_unit_test("py-LLT" "unittest/python/test_LLT.py")
 
 add_python_eigenpy_lib_unit_test("py-LDLT" "unittest/python/test_LDLT.py")
 
+add_python_eigenpy_lib_unit_test("py-FullPivLU"
+                                 "unittest/python/test_FullPivLU.py")
+
+add_python_eigenpy_lib_unit_test("py-PartialPivLU"
+                                 "unittest/python/test_PartialPivLU.py")
+
 add_python_eigenpy_lib_unit_test("py-id" "unittest/python/test_id.py")
 
 add_python_eigenpy_lib_unit_test("py-QR" "unittest/python/test_QR.py")
@@ -182,6 +188,10 @@ if(BUILD_TESTING_SCIPY)
   add_python_eigenpy_unit_test(
     "py-SimplicialLDLT"
     "unittest/python/decompositions/sparse/test_SimplicialLDLT.py")
+  add_python_eigenpy_unit_test(
+    "py-SparseLU" "unittest/python/decompositions/sparse/test_SparseLU.py")
+  add_python_eigenpy_unit_test(
+    "py-SparseQR" "unittest/python/decompositions/sparse/test_SparseQR.py")
 
   if(BUILD_WITH_CHOLMOD_SUPPORT)
     add_python_eigenpy_unit_test(

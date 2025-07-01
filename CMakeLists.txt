@@ -210,6 +210,7 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_ACCELERATE_HEADERS
 set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
     include/eigenpy/decompositions/sparse/LLT.hpp
     include/eigenpy/decompositions/sparse/LDLT.hpp
+    include/eigenpy/decompositions/sparse/LU.hpp
     include/eigenpy/decompositions/sparse/SimplicialCholesky.hpp
     include/eigenpy/decompositions/sparse/SparseSolverBase.hpp)
 
@@ -308,7 +309,11 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SOURCES
     src/decompositions/eigen-solver.cpp
     src/decompositions/llt-solver.cpp
     src/decompositions/ldlt-solver.cpp
+    src/decompositions/fullpivlu-solver.cpp
+    src/decompositions/partialpivlu-solver.cpp
     src/decompositions/minres-solver.cpp
+    src/decompositions/sparse-lu-solver.cpp
+    src/decompositions/sparse-qr-solver.cpp
     src/decompositions/qr-solvers.cpp
     src/decompositions/eigen-solver.cpp
     src/decompositions/self-adjoint-eigen-solver.cpp

@@ -1,0 +1,122 @@
+/*
+ * Copyright 2024 INRIA
+ */
+
+#ifndef __eigenpy_decompositions_sparse_lu_hpp__
+#define __eigenpy_decompositions_sparse_lu_hpp__
+
+#include <Eigen/SparseLU>
+#include <Eigen/Core>
+
+#include "eigenpy/eigenpy.hpp"
+#include "eigenpy/decompositions/sparse/SparseSolverBase.hpp"
+#include "eigenpy/utils/scalar-name.hpp"
+
+namespace eigenpy {
+
+template <typename _MatrixType,
+          typename _Ordering =
+              Eigen::COLAMDOrdering<typename _MatrixType::StorageIndex>>
+struct SparseLUVisitor : public boost::python::def_visitor<
+                             SparseLUVisitor<_MatrixType, _Ordering>> {
+  typedef SparseLUVisitor<_MatrixType, _Ordering> Visitor;
+  typedef _MatrixType MatrixType;
+
+  typedef Eigen::SparseLU<MatrixType> Solver;
+  typedef typename MatrixType::Scalar Scalar;
+  typedef typename MatrixType::RealScalar RealScalar;
+  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1, MatrixType::Options>
+      DenseVectorXs;
+  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic,
+                        MatrixType::Options>
+      DenseMatrixXs;
+
+  template <class PyClass>
+  void visit(PyClass &cl) const {
+    cl.def(bp::init<>(bp::arg("self"), "Default constructor"))
+        .def(bp::init<MatrixType>(bp::args("self", "matrix"),
+                                  "Constructs and performs the LU "
+                                  "factorization from a given matrix."))
+        .def("absDeterminant", &Solver::absDeterminant, bp::arg("self"),
+             "Returns the absolute value of the determinant of the matrix of "
+             "which *this is the QR decomposition.")
+        .def("analyzePattern", &Solver::analyzePattern, bp::args("self", "mat"),
+             "Compute the column permutation to minimize the fill-in.")
+        .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
+             "Returns a reference to the column matrix permutation PTc such "
+             "that Pr A PTc = LU.",
+             bp::return_value_policy<bp::copy_const_reference>())
+        .def("compute", &Solver::compute, bp::args("self", "matrix"),
+             "Compute the symbolic and numeric factorization of the input "
+             "sparse matrix. "
+             "The input matrix should be in column-major storage. ")
+        .def("determinant", &Solver::determinant, bp::arg("self"),
+             "Returns the determinant of the matrix.")
+        .def("factorize", &Solver::factorize, bp::args("self", "matrix"),
+             "Performs a numeric decomposition of a given matrix.\n"
+             "The given matrix must has the same sparcity than the matrix on "
+             "which the symbolic decomposition has been performed.")
+
+        .def("info", &Solver::info, bp::arg("self"),
+             "NumericalIssue if the input contains INF or NaN values or "
+             "overflow occured. Returns Success otherwise.")
+
+        .def("isSymmetric", &Solver::isSymmetric, bp::args("self", "sym"),
+             "Indicate that the pattern of the input matrix is symmetric. ")
+        .def("lastErrorMessage", &Solver::lastErrorMessage, bp::arg("self"),
+             "Returns a string describing the type of error. ")
+        .def("logAbsDeterminant", &Solver::logAbsDeterminant, bp::arg("self"),
+             "Returns the natural log of the absolute value of the determinant "
+             "of the "
+             "matrix of which *this is the QR decomposition")
+
+        .def("rowsPermutation", &Solver::rowsPermutation, bp::arg("self"),
+             "Returns a reference to the row matrix permutation Pr such that "
+             "Pr A PTc = LU",
+             bp::return_value_policy<bp::copy_const_reference>())
+        .def("setPivotThreshold", &Solver::setPivotThreshold,
+             bp::args("self", "thresh"),
+             "Set the threshold used for a diagonal entry to be an acceptable "
+             "pivot.")
+        .def("signDeterminant", &Solver::signDeterminant, bp::arg("self"),
+             "A number representing the sign of the determinant. ")
+
+        .def(SparseSolverBaseVisitor<Solver>());
+  }
+
+  static void expose() {
+    static const std::string classname =
+        "SparseLU_" + scalar_name<Scalar>::shortname();
+    expose(classname);
+  }
+
+  static void expose(const std::string &name) {
+    bp::class_<Solver, boost::noncopyable>(
+        name.c_str(),
+        "Sparse supernodal LU factorization for general matrices. \n\n"
+        "This class implements the supernodal LU factorization for general "
+        "matrices. "
+        "It uses the main techniques from the sequential SuperLU package "
+        "(http://crd-legacy.lbl.gov/~xiaoye/SuperLU/). It handles "
+        "transparently real "
+        "and complex arithmetic with single and double precision, depending on "
+        "the scalar "
+        "type of your input matrix. The code has been optimized to provide "
+        "BLAS-3 operations "
+        "during supernode-panel updates. It benefits directly from the "
+        "built-in high-performant "
+        "Eigen BLAS routines. Moreover, when the size of a supernode is very "
+        "small, the BLAS "
+        "calls are avoided to enable a better optimization from the compiler. "
+        "For best performance, "
+        "you should compile it with NDEBUG flag to avoid the numerous bounds "
+        "checking on vectors.",
+        bp::no_init)
+        .def(SparseLUVisitor())
+        .def(IdVisitor<Solver>());
+  }
+};
+
+}  // namespace eigenpy
+
+#endif  // ifndef __eigenpy_decompositions_sparse_lu_hpp__

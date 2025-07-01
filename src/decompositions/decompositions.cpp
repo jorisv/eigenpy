@@ -12,10 +12,14 @@ void exposeEigenSolver();
 void exposeSelfAdjointEigenSolver();
 void exposeLLTSolver();
 void exposeLDLTSolver();
+void exposeFullPivLUSolver();
+void exposePartialPivLUSolver();
 void exposeQRSolvers();
 void exposeMINRESSolver();
 void exposeSimplicialLLTSolver();
 void exposeSimplicialLDLTSolver();
+void exposeSparseLUSolver();
+void exposeSparseQRSolver();
 void exposePermutationMatrix();
 
 void exposeDecompositions() {
@@ -25,6 +29,8 @@ void exposeDecompositions() {
   exposeSelfAdjointEigenSolver();
   exposeLLTSolver();
   exposeLDLTSolver();
+  exposeFullPivLUSolver();
+  exposePartialPivLUSolver();
   exposeQRSolvers();
   exposeMINRESSolver();
 
@@ -44,6 +50,8 @@ void exposeDecompositions() {
   // Expose sparse decompositions
   exposeSimplicialLLTSolver();
   exposeSimplicialLDLTSolver();
+  exposeSparseLUSolver();
+  exposeSparseQRSolver();
 
   exposePermutationMatrix();
 
