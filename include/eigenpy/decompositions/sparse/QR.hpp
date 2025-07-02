@@ -15,8 +15,8 @@
 namespace eigenpy {
 
 template <typename _MatrixType,
-          typename _Ordering =
-              Eigen::COLAMDOrdering<typename _MatrixType::StorageIndex>> // TODO: Check ordering
+          typename _Ordering = Eigen::COLAMDOrdering<
+              typename _MatrixType::StorageIndex>>  // TODO: Check ordering
 struct SparseQRVisitor : public boost::python::def_visitor<
                              SparseQRVisitor<_MatrixType, _Ordering>> {
   typedef SparseQRVisitor<_MatrixType, _Ordering> Visitor;
@@ -37,8 +37,9 @@ struct SparseQRVisitor : public boost::python::def_visitor<
   template <class PyClass>
   void visit(PyClass &cl) const {
     cl.def(bp::init<>(bp::arg("self"), "Default constructor"))
-        .def(bp::init<MatrixType>(bp::args("self", "mat"),
-              "Construct a QR factorization of the matrix mat."))
+        .def(bp::init<MatrixType>(
+            bp::args("self", "mat"),
+            "Construct a QR factorization of the matrix mat."))
         .def("analyzePattern", &Solver::analyzePattern, bp::args("self", "mat"),
              "Compute the column permutation to minimize the fill-in.")
         .def("cols", &Solver::cols, bp::arg("self"),
@@ -61,7 +62,8 @@ struct SparseQRVisitor : public boost::python::def_visitor<
         .def("lastErrorMessage", &Solver::lastErrorMessage, bp::arg("self"),
              "Returns a string describing the type of error. ")
         .def("rank", &Solver::rank, bp::arg("self"),
-             "Returns the number of non linearly dependent columns as determined "
+             "Returns the number of non linearly dependent columns as "
+             "determined "
              "by the pivoting threshold. ")
         .def("rows", &Solver::rows, bp::arg("self"),
              "Returns the number of rows of the represented matrix. ")
@@ -83,14 +85,21 @@ struct SparseQRVisitor : public boost::python::def_visitor<
     bp::class_<Solver, boost::noncopyable>(
         name.c_str(),
         "Sparse left-looking QR factorization with numerical column pivoting. "
-        "This class implements a left-looking QR decomposition of sparse matrices "
-        "with numerical column pivoting. When a column has a norm less than a given "
-        "tolerance it is implicitly permuted to the end. The QR factorization thus "
-        "obtained is given by A*P = Q*R where R is upper triangular or trapezoidal. \n\n"
-        "P is the column permutation which is the product of the fill-reducing and the "
+        "This class implements a left-looking QR decomposition of sparse "
+        "matrices "
+        "with numerical column pivoting. When a column has a norm less than a "
+        "given "
+        "tolerance it is implicitly permuted to the end. The QR factorization "
+        "thus "
+        "obtained is given by A*P = Q*R where R is upper triangular or "
+        "trapezoidal. \n\n"
+        "P is the column permutation which is the product of the fill-reducing "
+        "and the "
         "numerical permutations. \n\n"
-        "Q is the orthogonal matrix represented as products of Householder reflectors. \n\n"
-        "R is the sparse triangular or trapezoidal matrix. The later occurs when A is rank-deficient. \n\n",
+        "Q is the orthogonal matrix represented as products of Householder "
+        "reflectors. \n\n"
+        "R is the sparse triangular or trapezoidal matrix. The later occurs "
+        "when A is rank-deficient. \n\n",
         bp::no_init)
         .def(SparseQRVisitor())
         .def(IdVisitor<Solver>());
