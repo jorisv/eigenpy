@@ -9,7 +9,15 @@
 namespace eigenpy {
 
 void exposeEigenSolver();
+void exposeGeneralizedEigenSolver();
 void exposeSelfAdjointEigenSolver();
+void exposeGeneralizedSelfAdjointEigenSolver();
+void exposeHessenbergDecomposition();
+void exposeRealQZ();
+void exposeRealSchur();
+void exposeTridiagonalization();
+void exposeComplexEigenSolver();
+void exposeComplexSchur();
 void exposeLLTSolver();
 void exposeLDLTSolver();
 void exposeFullPivLUSolver();
@@ -28,7 +36,15 @@ void exposeDecompositions() {
   using namespace Eigen;
 
   exposeEigenSolver();
+  exposeGeneralizedEigenSolver();
   exposeSelfAdjointEigenSolver();
+  exposeGeneralizedSelfAdjointEigenSolver();
+  exposeHessenbergDecomposition();
+  exposeRealQZ();
+  exposeRealSchur();
+  exposeTridiagonalization();
+  exposeComplexEigenSolver();
+  exposeComplexSchur();
   exposeLLTSolver();
   exposeLDLTSolver();
   exposeFullPivLUSolver();

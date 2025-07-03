@@ -228,6 +228,14 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_HEADERS
     ${${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS}
     include/eigenpy/decompositions/decompositions.hpp
     include/eigenpy/decompositions/EigenSolver.hpp
+    include/eigenpy/decompositions/GeneralizedEigenSolver.hpp
+    include/eigenpy/decompositions/GeneralizedSelfAdjointEigenSolver.hpp
+    include/eigenpy/decompositions/HessenbergDecomposition.hpp
+    include/eigenpy/decompositions/RealQZ.hpp
+    include/eigenpy/decompositions/Tridiagonalization.hpp
+    include/eigenpy/decompositions/RealSchur.hpp
+    include/eigenpy/decompositions/ComplexEigenSolver.hpp
+    include/eigenpy/decompositions/ComplexSchur.hpp
     include/eigenpy/decompositions/PermutationMatrix.hpp
     include/eigenpy/decompositions/LDLT.hpp
     include/eigenpy/decompositions/LLT.hpp
@@ -310,17 +318,24 @@ set(${PROJECT_NAME}_SOLVERS_SOURCES src/solvers/preconditioners.cpp
 set(${PROJECT_NAME}_DECOMPOSITIONS_SOURCES
     src/decompositions/decompositions.cpp
     src/decompositions/eigen-solver.cpp
+    src/decompositions/generalized-eigen-solver.cpp
+    src/decompositions/generalized-self-adjoint-eigen-solver.cpp
+    src/decompositions/complex-eigen-solver.cpp
+    src/decompositions/complex-schur.cpp
     src/decompositions/llt-solver.cpp
     src/decompositions/ldlt-solver.cpp
     src/decompositions/bdcsvd-solver.cpp
     src/decompositions/jacobisvd-solver.cpp
     src/decompositions/fullpivlu-solver.cpp
+    src/decompositions/hessenberg-decomposition.cpp
+    src/decompositions/real-qz.cpp
+    src/decompositions/tridiagonalization.cpp
+    src/decompositions/real-schur.cpp
     src/decompositions/partialpivlu-solver.cpp
     src/decompositions/minres-solver.cpp
     src/decompositions/sparse-lu-solver.cpp
     src/decompositions/sparse-qr-solver.cpp
     src/decompositions/qr-solvers.cpp
-    src/decompositions/eigen-solver.cpp
     src/decompositions/self-adjoint-eigen-solver.cpp
     src/decompositions/permutation-matrix.cpp
     src/decompositions/simplicial-llt-solver.cpp

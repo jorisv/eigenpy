@@ -138,8 +138,34 @@ add_python_eigenpy_lib_unit_test("py-eigen-solver"
                                  "unittest/python/test_eigen_solver.py")
 
 add_python_eigenpy_lib_unit_test(
+  "py-generalized-eigen-solver"
+  "unittest/python/test_generalized_eigen_solver.py")
+
+add_python_eigenpy_lib_unit_test(
+  "py-generalized-self-adjoint-eigen-solver"
+  "unittest/python/test_generalized_self_adjoint_eigen_solver.py")
+
+add_python_eigenpy_lib_unit_test("py-complex-eigen-solver"
+                                 "unittest/python/test_complex_eigen_solver.py")
+
+add_python_eigenpy_lib_unit_test("py-complex-schur"
+                                 "unittest/python/test_complex_schur.py")
+
+add_python_eigenpy_lib_unit_test(
   "py-self-adjoint-eigen-solver"
   "unittest/python/test_self_adjoint_eigen_solver.py")
+
+add_python_eigenpy_lib_unit_test(
+  "py-hessenberg-decomposition"
+  "unittest/python/test_hessenberg_decomposition.py")
+
+add_python_eigenpy_lib_unit_test("py-real-qz" "unittest/python/test_real_qz.py")
+
+add_python_eigenpy_lib_unit_test("py-real-schur"
+                                 "unittest/python/test_real_schur.py")
+
+add_python_eigenpy_lib_unit_test("py-tridiagonalization"
+                                 "unittest/python/test_tridiagonalization.py")
 
 add_python_eigenpy_lib_unit_test("py-LLT" "unittest/python/test_LLT.py")
 
