@@ -21,6 +21,8 @@ void exposeSimplicialLDLTSolver();
 void exposeSparseLUSolver();
 void exposeSparseQRSolver();
 void exposePermutationMatrix();
+void exposeBDCSVDSolver();
+void exposeJacobiSVDSolver();
 
 void exposeDecompositions() {
   using namespace Eigen;
@@ -33,6 +35,8 @@ void exposeDecompositions() {
   exposePartialPivLUSolver();
   exposeQRSolvers();
   exposeMINRESSolver();
+  exposeBDCSVDSolver();
+  exposeJacobiSVDSolver();
 
   {
     bp::enum_<DecompositionOptions>("DecompositionOptions")

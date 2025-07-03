@@ -237,7 +237,10 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_HEADERS
     include/eigenpy/decompositions/CompleteOrthogonalDecomposition.hpp
     include/eigenpy/decompositions/FullPivHouseholderQR.hpp
     include/eigenpy/decompositions/SelfAdjointEigenSolver.hpp
-    include/eigenpy/decompositions/minres.hpp)
+    include/eigenpy/decompositions/minres.hpp
+    include/eigenpy/decompositions/SVDBase.hpp
+    include/eigenpy/decompositions/BDCSVD.hpp
+    include/eigenpy/decompositions/JacobiSVD.hpp)
 
 set(${PROJECT_NAME}_HEADERS
     ${${PROJECT_NAME}_UTILS_HEADERS}
@@ -309,6 +312,8 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SOURCES
     src/decompositions/eigen-solver.cpp
     src/decompositions/llt-solver.cpp
     src/decompositions/ldlt-solver.cpp
+    src/decompositions/bdcsvd-solver.cpp
+    src/decompositions/jacobisvd-solver.cpp
     src/decompositions/fullpivlu-solver.cpp
     src/decompositions/partialpivlu-solver.cpp
     src/decompositions/minres-solver.cpp
