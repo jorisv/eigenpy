@@ -13,6 +13,8 @@
 #include "eigenpy/solvers/LeastSquaresConjugateGradient.hpp"
 #endif
 
+#include "eigenpy/solvers/BiCGSTAB.hpp"
+
 namespace eigenpy {
 void exposeSolvers() {
   using namespace Eigen;
@@ -30,6 +32,9 @@ void exposeSolvers() {
   //    ConjugateGradientVisitor<
   //    ConjugateGradient<MatrixXd,Lower|Upper,LimitedBFGSPreconditioner<double,Dynamic,Lower|Upper>
   //    > >::expose("LimitedBFGSConjugateGradient");
+
+  BiCGSTABVisitor<BiCGSTAB<
+      MatrixXd, LeastSquareDiagonalPreconditioner<MatrixXd::Scalar>>>::expose();
 }
 }  // namespace eigenpy
 

@@ -190,6 +190,7 @@ set(${PROJECT_NAME}_SOLVERS_HEADERS
     include/eigenpy/solvers/preconditioners.hpp
     include/eigenpy/solvers/IterativeSolverBase.hpp
     include/eigenpy/solvers/LeastSquaresConjugateGradient.hpp
+    include/eigenpy/solvers/BiCGSTAB.hpp
     include/eigenpy/solvers/ConjugateGradient.hpp
     include/eigenpy/solvers/SparseSolverBase.hpp
     include/eigenpy/solvers/BasicPreconditioners.hpp
