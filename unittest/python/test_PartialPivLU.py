@@ -25,5 +25,7 @@ det = partialpivlu.determinant()
 rcond = partialpivlu.rcond()
 
 matrixLU = partialpivlu.matrixLU()
-permutationP = partialpivlu.permutationP()
+P = partialpivlu.permutationP()
+
 reconstructed_matrix = partialpivlu.reconstructedMatrix()
+assert eigenpy.is_approx(reconstructed_matrix, A)

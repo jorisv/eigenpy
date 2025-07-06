@@ -47,5 +47,4 @@ P = fullpivlu.permutationP()
 Q = fullpivlu.permutationQ()
 
 reconstructed_matrix = fullpivlu.reconstructedMatrix()
-
 assert eigenpy.is_approx(reconstructed_matrix, A)

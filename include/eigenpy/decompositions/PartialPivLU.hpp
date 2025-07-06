@@ -82,27 +82,41 @@ struct PartialPivLUSolverVisitor : public boost::python::def_visitor<
   }
 
   static void expose(const std::string &name) {
-    bp::class_<Solver>(name.c_str(),
-                       "LU decomposition of a matrix with partial pivoting, "
-                       "and related features. \n\n"
-                       "This class represents a LU decomposition of a square "
-                       "invertible matrix, "
-                       "with partial pivoting: the matrix A is decomposed as A "
-                       "= PLU where L is "
-                       "unit-lower-triangular, U is upper-triangular, and P is "
-                       "a permutation matrix.\n\n"
-                       "Typically, partial pivoting LU decomposition is only "
-                       "considered numerically "
-                       "stable for square invertible matrices. Thus LAPACK's "
-                       "dgesv and dgesvx require "
-                       "the matrix to be square and invertible. The present "
-                       "class does the same. It "
-                       "will assert that the matrix is square, but it won't "
-                       "(actually it can't) check "
-                       "that the matrix is invertible: it is your task to "
-                       "check that you only use this "
-                       "decomposition on invertible matrices.",
-                       bp::no_init)
+    bp::class_<Solver>(
+        name.c_str(),
+        "LU decomposition of a matrix with partial pivoting, "
+        "and related features. \n\n"
+        "This class represents a LU decomposition of a square "
+        "invertible matrix, "
+        "with partial pivoting: the matrix A is decomposed as A "
+        "= PLU where L is "
+        "unit-lower-triangular, U is upper-triangular, and P is "
+        "a permutation matrix.\n\n"
+        "Typically, partial pivoting LU decomposition is only "
+        "considered numerically "
+        "stable for square invertible matrices. Thus LAPACK's "
+        "dgesv and dgesvx require "
+        "the matrix to be square and invertible. The present "
+        "class does the same. It "
+        "will assert that the matrix is square, but it won't "
+        "(actually it can't) check "
+        "that the matrix is invertible: it is your task to "
+        "check that you only use this "
+        "decomposition on invertible matrices. \n\n"
+        "The guaranteed safe alternative, working for all matrices, "
+        "is the full pivoting LU decomposition, provided by class "
+        "FullPivLU. \n\n"
+        "This is not a rank-revealing LU decomposition. Many features "
+        "are intentionally absent from this class, such as "
+        "rank computation. If you need these features, use class "
+        "FullPivLU. \n\n"
+        "This LU decomposition is suitable to invert invertible "
+        "matrices. It is what MatrixBase::inverse() uses in the "
+        "general case. On the other hand, it is not suitable to "
+        "determine whether a given matrix is invertible. \n\n"
+        "The data of the LU decomposition can be directly accessed "
+        "through the methods matrixLU(), permutationP().",
+        bp::no_init)
         .def(IdVisitor<Solver>())
         .def(PartialPivLUSolverVisitor());
   }
