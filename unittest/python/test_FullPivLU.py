@@ -32,15 +32,20 @@ is_injective = fullpivlu.isInjective()
 is_invertible = fullpivlu.isInvertible()
 is_surjective = fullpivlu.isSurjective()
 
-LU = fullpivlu.matrixLU()
-permutationP = fullpivlu.permutationP()
-permutationQ = fullpivlu.permutationQ()
-
-reconstructed_matrix = fullpivlu.reconstructedMatrix()
-
 fullpivlu.setThreshold(1e-8)
+threshold = fullpivlu.threshold()
+
+fullpivlu.setThreshold()
 threshold = fullpivlu.threshold()
 
 image = fullpivlu.image(A)
 inverse = fullpivlu.inverse()
 kernel = fullpivlu.kernel()
+
+LU = fullpivlu.matrixLU()
+P = fullpivlu.permutationP()
+Q = fullpivlu.permutationQ()
+
+reconstructed_matrix = fullpivlu.reconstructedMatrix()
+
+assert eigenpy.is_approx(reconstructed_matrix, A)

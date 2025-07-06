@@ -29,7 +29,7 @@ struct BiCGSTABVisitor
   }
 
   static void expose() {
-    bp::class_<BiCGSTAB, boost::noncopyable>("BiCGSTAB" , bp::no_init)
+    bp::class_<BiCGSTAB, boost::noncopyable>("BiCGSTAB", bp::no_init)
         .def(IterativeSolverVisitor<BiCGSTAB>())
         .def(BiCGSTABVisitor<BiCGSTAB>())
         .def(IdVisitor<BiCGSTAB>());

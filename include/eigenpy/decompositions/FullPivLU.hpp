@@ -90,6 +90,7 @@ struct FullPivLUSolverVisitor
         .def("maxPivot", &Solver::maxPivot, bp::arg("self"))
         .def("nonzeroPivots", &Solver::nonzeroPivots, bp::arg("self"))
 
+        // TODO: Expose so that the return type are convertible to np arrays
         .def("permutationP", &Solver::permutationP, bp::arg("self"),
              "Returns the permutation P.",
              bp::return_value_policy<bp::copy_const_reference>())
@@ -129,12 +130,15 @@ struct FullPivLUSolverVisitor
              "is strictly greater than |pivot| ⩽ threshold×|maxpivot| where "
              "maxpivot is the biggest pivot.",
              bp::return_self<>())
-        .def("setThreshold",
-             (Solver & (Solver::*)(Eigen::Default_t)) & Solver::setThreshold,
-             bp::args("self", "threshold"),
-             "Allows to come back to the default behavior, letting Eigen use "
-             " its default formula for determining the threshold.",
-             bp::return_self<>())
+        .def(
+            "setThreshold",
+            +[](Solver &self) -> Solver & {
+              return self.setThreshold(Eigen::Default);
+            },
+            bp::arg("self"),
+            "Allows to come back to the default behavior, letting Eigen use "
+            "its default formula for determining the threshold.",
+            bp::return_self<>())
 
         .def("solve", &solve<VectorXs>, bp::args("self", "b"),
              "Returns the solution x of A x = b using the current "
