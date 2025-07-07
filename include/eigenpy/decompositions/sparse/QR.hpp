@@ -15,8 +15,8 @@
 namespace eigenpy {
 
 template <typename _MatrixType,
-          typename _Ordering = Eigen::COLAMDOrdering<
-              typename _MatrixType::StorageIndex>>  // TODO: Check ordering
+          typename _Ordering = Eigen::AMDOrdering<
+              typename _MatrixType::StorageIndex>>
 struct SparseQRVisitor : public boost::python::def_visitor<
                              SparseQRVisitor<_MatrixType, _Ordering>> {
   typedef SparseQRVisitor<_MatrixType, _Ordering> Visitor;
@@ -40,33 +40,43 @@ struct SparseQRVisitor : public boost::python::def_visitor<
         .def(bp::init<MatrixType>(
             bp::args("self", "mat"),
             "Construct a QR factorization of the matrix mat."))
-        .def("analyzePattern", &Solver::analyzePattern, bp::args("self", "mat"),
-             "Compute the column permutation to minimize the fill-in.")
+
         .def("cols", &Solver::cols, bp::arg("self"),
              "Returns the number of columns of the represented matrix. ")
-        .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
-             "Returns a reference to the column matrix permutation PTc such "
-             "that Pr A PTc = LU.",
-             bp::return_value_policy<bp::copy_const_reference>())
+        .def("rows", &Solver::rows, bp::arg("self"),
+             "Returns the number of rows of the represented matrix. ")
+
         .def("compute", &Solver::compute, bp::args("self", "matrix"),
              "Compute the symbolic and numeric factorization of the input "
              "sparse matrix. "
              "The input matrix should be in column-major storage. ")
+        .def("analyzePattern", &Solver::analyzePattern, bp::args("self", "mat"),
+             "Compute the column permutation to minimize the fill-in.")
         .def("factorize", &Solver::factorize, bp::args("self", "matrix"),
              "Performs a numeric decomposition of a given matrix.\n"
              "The given matrix must has the same sparcity than the matrix on "
              "which the symbolic decomposition has been performed.")
+
+        // TODO: Expose so that the return type are convertible to np arrays
+        // matrixQ
+        // matrixR
+
+        .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
+             "Returns a reference to the column matrix permutation PTc such "
+             "that Pr A PTc = LU.",
+             bp::return_value_policy<bp::copy_const_reference>())
+
         .def("info", &Solver::info, bp::arg("self"),
              "NumericalIssue if the input contains INF or NaN values or "
              "overflow occured. Returns Success otherwise.")
         .def("lastErrorMessage", &Solver::lastErrorMessage, bp::arg("self"),
              "Returns a string describing the type of error. ")
+
         .def("rank", &Solver::rank, bp::arg("self"),
              "Returns the number of non linearly dependent columns as "
              "determined "
              "by the pivoting threshold. ")
-        .def("rows", &Solver::rows, bp::arg("self"),
-             "Returns the number of rows of the represented matrix. ")
+
         .def("setPivotThreshold", &Solver::setPivotThreshold,
              bp::args("self", "thresh"),
              "Set the threshold used for a diagonal entry to be an acceptable "
