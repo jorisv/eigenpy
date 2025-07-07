@@ -18,6 +18,8 @@ assert eigenpy.is_approx(X, X_est)
 assert eigenpy.is_approx(A.dot(X_est), B)
 
 # Others
+assert bdcsvd.info() == eigenpy.ComputationInfo.Success
+
 cols = bdcsvd.cols()
 rows = bdcsvd.rows()
 
@@ -30,6 +32,15 @@ V = bdcsvd.matrixV()
 nonzerosingval = bdcsvd.nonzeroSingularValues()
 singularvalues = bdcsvd.singularValues()
 
+S = np.diag(singularvalues)
+V_adj = V.conj().T
+assert eigenpy.is_approx(A, U @ S @ V_adj)
+
 bdcsvd.setThreshold(1e-8)
 threshold = bdcsvd.threshold()
+
+bdcsvd.setThreshold()
+threshold = bdcsvd.threshold()
+
 rank = bdcsvd.rank()
+bdcsvd.setSwitchSize(10)

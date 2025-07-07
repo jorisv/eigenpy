@@ -67,12 +67,15 @@ struct SVDBaseVisitor
              "threshold(). "
              "The default is NumTraits<Scalar>::epsilon()",
              bp::return_self<>())
-        .def("setThreshold",
-             (Solver & (Solver::*)(Eigen::Default_t)) & Solver::setThreshold,
-             bp::args("self", "threshold"),
-             "Allows to come back to the default behavior, letting Eigen use "
-             " its default formula for determining the threshold.",
-             bp::return_self<>())
+        .def(
+            "setThreshold",
+            +[](Solver &self) -> Solver & {
+              return self.setThreshold(Eigen::Default);
+            },
+            bp::arg("self"),
+            "Allows to come back to the default behavior, letting Eigen use "
+            "its default formula for determining the threshold.",
+            bp::return_self<>())
 
         .def("singularValues", &Solver::singularValues, bp::arg("self"),
              "Returns the vector of singular values.",

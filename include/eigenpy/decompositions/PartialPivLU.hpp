@@ -53,9 +53,12 @@ struct PartialPivLUSolverVisitor : public boost::python::def_visitor<
         .def("matrixLU", &Solver::matrixLU, bp::arg("self"),
              "Returns the LU decomposition matrix.",
              bp::return_internal_reference<>())
+
+        // TODO: Expose so that the return type are convertible to np arrays
         .def("permutationP", &Solver::permutationP, bp::arg("self"),
              "Returns the permutation P.",
              bp::return_value_policy<bp::copy_const_reference>())
+
 #if EIGEN_VERSION_AT_LEAST(3, 3, 0)
         .def("rcond", &Solver::rcond, bp::arg("self"),
              "Returns an estimate of the reciprocal condition number of the "

@@ -25,6 +25,8 @@ struct BDCSVDVisitor
   template <class PyClass>
   void visit(PyClass &cl) const {
     cl.def(bp::init<>(bp::arg("self"), "Default constructor"))
+        // TODO: Management of _Options, put default options for default
+        // constructor
         .def(bp::init<Eigen::DenseIndex, Eigen::DenseIndex>(
             bp::args("self", "rows", "cols"),
             "Default Constructor with memory preallocation. "))
@@ -65,7 +67,8 @@ struct BDCSVDVisitor
              "specified by the computationOptions parameter.  ",
              bp::return_self<>())
         .def("rows", &Solver::rows, bp::arg("self"),
-             "Returns the number of rows. . ")
+             "Returns the number of rows. ")
+        .def("setSwitchSize", &Solver::setSwitchSize, bp::args("self", "s"))
 
         .def(SVDBaseVisitor<Solver>());
   }

@@ -25,6 +25,8 @@ struct JacobiSVDVisitor
   template <class PyClass>
   void visit(PyClass &cl) const {
     cl.def(bp::init<>(bp::arg("self"), "Default constructor"))
+        // TODO: Management of _Options, put default options for default
+        // constructor
         .def(bp::init<Eigen::DenseIndex, Eigen::DenseIndex>(
             bp::args("self", "rows", "cols"),
             "Default Constructor with memory preallocation. "))
