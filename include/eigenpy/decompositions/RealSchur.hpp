@@ -63,7 +63,9 @@ struct RealSchurVisitor
         .def("setMaxIterations", &Solver::setMaxIterations,
              bp::args("self", "max_iter"),
              "Sets the maximum number of iterations allowed.",
-             bp::return_self<>());
+             bp::return_self<>())
+        .def("getMaxIterations", &Solver::getMaxIterations, bp::arg("self"),
+             "Returns the maximum number of iterations.");
   }
 
   static void expose() {

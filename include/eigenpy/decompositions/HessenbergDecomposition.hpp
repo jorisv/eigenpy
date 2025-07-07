@@ -32,11 +32,6 @@ struct HessenbergDecompositionVisitor
             bp::arg("matrix"),
             "Constructor; computes Hessenberg decomposition of given matrix. "))
 
-        .def("compute",
-             &HessenbergDecompositionVisitor::compute_proxy<MatrixType>,
-             bp::args("self", "A"),
-             "Computes Hessenberg decomposition of given matrix. ",
-             bp::return_self<>())
         .def(
             "compute",
             (Solver & (Solver::*)(const Eigen::EigenBase<MatrixType>& matrix)) &
@@ -49,6 +44,7 @@ struct HessenbergDecompositionVisitor
              bp::arg("self"), "Returns the Householder coefficients. ",
              bp::return_value_policy<bp::copy_const_reference>())
 
+        // TODO: Expose so that the return type are convertible to np arrays
         // matrixH
         // matrixQ
 
@@ -67,13 +63,6 @@ struct HessenbergDecompositionVisitor
     bp::class_<Solver>(name.c_str(), bp::no_init)
         .def(HessenbergDecompositionVisitor())
         .def(IdVisitor<Solver>());
-  }
-
- private:
-  template <typename MatrixType>
-  static Solver& compute_proxy(Solver& self,
-                               const Eigen::EigenBase<MatrixType>& matrix) {
-    return self.compute(matrix);
   }
 };
 

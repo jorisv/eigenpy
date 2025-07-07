@@ -27,6 +27,13 @@ struct ComplexSchurVisitor
         .def(bp::init<MatrixType, bp::optional<bool>>(
             bp::args("matrix", "computeU"), "Computes Schur  of given matrix"))
 
+        .def("matrixU", &Solver::matrixU, bp::arg("self"),
+             "Returns the unitary matrix in the Schur decomposition. ",
+             bp::return_value_policy<bp::copy_const_reference>())
+        .def("matrixT", &Solver::matrixT, bp::arg("self"),
+             "Returns the triangular matrix in the Schur decomposition. ",
+             bp::return_value_policy<bp::copy_const_reference>())
+
         .def("compute", &ComplexSchurVisitor::compute_proxy<MatrixType>,
              bp::args("self", "matrix"), "Computes the Schur of given matrix.",
              bp::return_self<>())
@@ -45,13 +52,6 @@ struct ComplexSchurVisitor
              bp::args("self", "matrixH", "matrixQ", "computeU"),
              "Compute Schur decomposition from a given Hessenberg matrix. ",
              bp::return_self<>())
-
-        .def("matrixT", &Solver::matrixT, bp::arg("self"),
-             "Returns the triangular matrix in the Schur decomposition. ",
-             bp::return_value_policy<bp::copy_const_reference>())
-        .def("matrixU", &Solver::matrixU, bp::arg("self"),
-             "Returns the unitary matrix in the Schur decomposition. ",
-             bp::return_value_policy<bp::copy_const_reference>())
 
         .def("info", &Solver::info, bp::arg("self"),
              "NumericalIssue if the input contains INF or NaN values or "

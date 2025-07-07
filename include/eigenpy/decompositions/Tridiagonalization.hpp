@@ -29,10 +29,6 @@ struct TridiagonalizationVisitor : public boost::python::def_visitor<
                                   "Constructor; computes tridiagonal "
                                   "decomposition of given matrix. "))
 
-        .def("compute", &TridiagonalizationVisitor::compute_proxy<MatrixType>,
-             bp::args("self", "matrix"),
-             "Computes tridiagonal decomposition of given matrix. ",
-             bp::return_self<>())
         .def(
             "compute",
             (Solver & (Solver::*)(const Eigen::EigenBase<MatrixType>& matrix)) &
@@ -41,22 +37,21 @@ struct TridiagonalizationVisitor : public boost::python::def_visitor<
             "Computes tridiagonal decomposition of given matrix. ",
             bp::return_self<>())
 
-        .def("diagonal", &Solver::diagonal, bp::arg("self"),
-             "Returns the diagonal of the tridiagonal matrix T in the "
-             "decomposition. ")
-
         .def("householderCoefficients", &Solver::householderCoefficients,
              bp::arg("self"), "Returns the Householder coefficients. ")
+        .def("packedMatrix", &Solver::packedMatrix, bp::arg("self"),
+             "Returns the internal representation of the decomposition. ",
+             bp::return_value_policy<bp::copy_const_reference>())
 
+        // TODO: Expose so that the return type are convertible to np arrays
         .def("matrixQ", &Solver::matrixQ, bp::arg("self"),
              "Returns the unitary matrix Q in the decomposition. ")
         .def("matrixT", &Solver::matrixT, bp::arg("self"),
              "Returns the unitary matrix T in the decomposition. ")
 
-        .def("packedMatrix", &Solver::packedMatrix, bp::arg("self"),
-             "Returns the internal representation of the decomposition. ",
-             bp::return_value_policy<bp::copy_const_reference>())
-
+        .def("diagonal", &Solver::diagonal, bp::arg("self"),
+             "Returns the diagonal of the tridiagonal matrix T in the "
+             "decomposition. ")
         .def("subDiagonal", &Solver::subDiagonal, bp::arg("self"),
              "Returns the subdiagonal of the tridiagonal matrix T in the "
              "decomposition.");
@@ -72,13 +67,6 @@ struct TridiagonalizationVisitor : public boost::python::def_visitor<
     bp::class_<Solver>(name.c_str(), bp::no_init)
         .def(TridiagonalizationVisitor())
         .def(IdVisitor<Solver>());
-  }
-
- private:
-  template <typename MatrixType>
-  static Solver& compute_proxy(Solver& self,
-                               const Eigen::EigenBase<MatrixType>& matrix) {
-    return self.compute(matrix);
   }
 };
 

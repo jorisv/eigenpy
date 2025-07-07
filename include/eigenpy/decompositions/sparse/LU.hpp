@@ -37,49 +37,59 @@ struct SparseLUVisitor : public boost::python::def_visitor<
         .def(bp::init<MatrixType>(bp::args("self", "matrix"),
                                   "Constructs and performs the LU "
                                   "factorization from a given matrix."))
+
+        .def("determinant", &Solver::determinant, bp::arg("self"),
+             "Returns the determinant of the matrix.")
+        .def("signDeterminant", &Solver::signDeterminant, bp::arg("self"),
+             "A number representing the sign of the determinant. ")
         .def("absDeterminant", &Solver::absDeterminant, bp::arg("self"),
              "Returns the absolute value of the determinant of the matrix of "
              "which *this is the QR decomposition.")
-        .def("analyzePattern", &Solver::analyzePattern, bp::args("self", "mat"),
-             "Compute the column permutation to minimize the fill-in.")
+        .def("logAbsDeterminant", &Solver::logAbsDeterminant, bp::arg("self"),
+             "Returns the natural log of the absolute value of the determinant "
+             "of the matrix of which *this is the QR decomposition")
+
         .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
              "Returns a reference to the column matrix permutation PTc such "
              "that Pr A PTc = LU.",
              bp::return_value_policy<bp::copy_const_reference>())
+        .def("rowsPermutation", &Solver::rowsPermutation, bp::arg("self"),
+             "Returns a reference to the row matrix permutation Pr such that "
+             "Pr A PTc = LU",
+             bp::return_value_policy<bp::copy_const_reference>())
+
         .def("compute", &Solver::compute, bp::args("self", "matrix"),
              "Compute the symbolic and numeric factorization of the input "
              "sparse matrix. "
              "The input matrix should be in column-major storage. ")
-        .def("determinant", &Solver::determinant, bp::arg("self"),
-             "Returns the determinant of the matrix.")
+
+        .def("analyzePattern", &Solver::analyzePattern,
+             bp::args("self", "matrix"),
+             "Compute the column permutation to minimize the fill-in.")
         .def("factorize", &Solver::factorize, bp::args("self", "matrix"),
              "Performs a numeric decomposition of a given matrix.\n"
              "The given matrix must has the same sparcity than the matrix on "
              "which the symbolic decomposition has been performed.")
 
-        .def("info", &Solver::info, bp::arg("self"),
-             "NumericalIssue if the input contains INF or NaN values or "
-             "overflow occured. Returns Success otherwise.")
+        // TODO: Expose so that the return type are convertible to np arrays
+        // transpose()
+        // adjoint()
+        // matrixL()
+        // matrixU()
 
         .def("isSymmetric", &Solver::isSymmetric, bp::args("self", "sym"),
              "Indicate that the pattern of the input matrix is symmetric. ")
-        .def("lastErrorMessage", &Solver::lastErrorMessage, bp::arg("self"),
-             "Returns a string describing the type of error. ")
-        .def("logAbsDeterminant", &Solver::logAbsDeterminant, bp::arg("self"),
-             "Returns the natural log of the absolute value of the determinant "
-             "of the "
-             "matrix of which *this is the QR decomposition")
 
-        .def("rowsPermutation", &Solver::rowsPermutation, bp::arg("self"),
-             "Returns a reference to the row matrix permutation Pr such that "
-             "Pr A PTc = LU",
-             bp::return_value_policy<bp::copy_const_reference>())
         .def("setPivotThreshold", &Solver::setPivotThreshold,
              bp::args("self", "thresh"),
              "Set the threshold used for a diagonal entry to be an acceptable "
              "pivot.")
-        .def("signDeterminant", &Solver::signDeterminant, bp::arg("self"),
-             "A number representing the sign of the determinant. ")
+
+        .def("info", &Solver::info, bp::arg("self"),
+             "NumericalIssue if the input contains INF or NaN values or "
+             "overflow occured. Returns Success otherwise.")
+        .def("lastErrorMessage", &Solver::lastErrorMessage, bp::arg("self"),
+             "Returns a string describing the type of error. ")
 
         .def(SparseSolverBaseVisitor<Solver>());
   }
