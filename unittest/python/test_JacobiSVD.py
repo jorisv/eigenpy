@@ -8,7 +8,11 @@ rng = np.random.default_rng()
 A = rng.random((dim, dim))
 A = (A + A.T) * 0.5 + np.diag(10.0 + rng.random(dim))
 
-jacobisvd = eigenpy.JacobiSVD(A, 24)
+opt_U = eigenpy.DecompositionOptions.ComputeFullU
+opt_V = eigenpy.DecompositionOptions.ComputeFullV
+
+jacobisvd = eigenpy.JacobiSVD(A, opt_U | opt_V)
+assert jacobisvd.info() == eigenpy.ComputationInfo.Success
 
 # Solve
 X = rng.random((dim, 20))
@@ -30,6 +34,14 @@ V = jacobisvd.matrixV()
 nonzerosingval = jacobisvd.nonzeroSingularValues()
 singularvalues = jacobisvd.singularValues()
 
+S = np.diag(singularvalues)
+V_adj = V.conj().T
+assert eigenpy.is_approx(A, U @ S @ V_adj)
+
 jacobisvd.setThreshold(1e-8)
 threshold = jacobisvd.threshold()
+
+jacobisvd.setThreshold()
+threshold = jacobisvd.threshold()
+
 rank = jacobisvd.rank()

@@ -25,8 +25,6 @@ struct JacobiSVDVisitor
   template <class PyClass>
   void visit(PyClass &cl) const {
     cl.def(bp::init<>(bp::arg("self"), "Default constructor"))
-        // TODO: Management of _Options, put default options for default
-        // constructor
         .def(bp::init<Eigen::DenseIndex, Eigen::DenseIndex>(
             bp::args("self", "rows", "cols"),
             "Default Constructor with memory preallocation. "))
@@ -62,7 +60,7 @@ struct JacobiSVDVisitor
              (Solver & (Solver::*)(const MatrixType &matrix,
                                    unsigned int computationOptions)) &
                  Solver::compute,
-             bp::args("self", "matrix"),
+             bp::args("self", "matrix", "computationOptions"),
              "Method performing the decomposition of given matrix, as "
              "specified by the computationOptions parameter.  ",
              bp::return_self<>())

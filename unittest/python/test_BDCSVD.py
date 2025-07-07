@@ -8,11 +8,10 @@ rng = np.random.default_rng()
 A = rng.random((dim, dim))
 A = (A + A.T) * 0.5 + np.diag(10.0 + rng.random(dim))
 
-bdcsvd = eigenpy.BDCSVD(
-    A,
-    eigenpy.DecompositionOptions.ComputeFullU
-    | eigenpy.DecompositionOptions.ComputeFullV,
-)
+opt_U = eigenpy.DecompositionOptions.ComputeFullU
+opt_V = eigenpy.DecompositionOptions.ComputeFullV
+
+bdcsvd = eigenpy.BDCSVD(A, opt_U | opt_V)
 assert bdcsvd.info() == eigenpy.ComputationInfo.Success
 
 # Solve
