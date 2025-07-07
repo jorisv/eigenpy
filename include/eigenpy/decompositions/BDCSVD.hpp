@@ -25,28 +25,18 @@ struct BDCSVDVisitor
   template <class PyClass>
   void visit(PyClass &cl) const {
     cl.def(bp::init<>(bp::arg("self"), "Default constructor"))
-        // TODO: Management of _Options, put default options for default
-        // constructor
         .def(bp::init<Eigen::DenseIndex, Eigen::DenseIndex>(
             bp::args("self", "rows", "cols"),
             "Default Constructor with memory preallocation. "))
         .def(bp::init<Eigen::DenseIndex, Eigen::DenseIndex, unsigned int>(
-            bp::args("self", "rows", "cols", "computationOptions "),
-            "Default Constructor with memory preallocation. \n\n"
-            "Like the default constructor but with preallocation of the "
-            "internal "
-            "data according to the specified problem size and the "
-            "computationOptions. "))
+            bp::args("self", "rows", "cols", "computationOptions"),
+            "Default Constructor with memory preallocation. "))
         .def(bp::init<MatrixType>(
             bp::args("self", "matrix"),
             "Constructor performing the decomposition of given matrix. "))
         .def(bp::init<MatrixType, unsigned int>(
-            bp::args("self", "matrix", "computationOptions "),
-            "Constructor performing the decomposition of given matrix. \n\n"
-            "One cannot request unitiaries using both the Options template "
-            "parameter "
-            "and the constructor. If possible, prefer using the Options "
-            "template parameter."))
+            bp::args("self", "matrix", "computationOptions"),
+            "Constructor performing the decomposition of given matrix. "))
 
         .def("cols", &Solver::cols, bp::arg("self"),
              "Returns the number of columns. ")

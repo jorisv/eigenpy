@@ -8,7 +8,12 @@ rng = np.random.default_rng()
 A = rng.random((dim, dim))
 A = (A + A.T) * 0.5 + np.diag(10.0 + rng.random(dim))
 
-bdcsvd = eigenpy.BDCSVD(A, 24)
+bdcsvd = eigenpy.BDCSVD(
+    A,
+    eigenpy.DecompositionOptions.ComputeFullU
+    | eigenpy.DecompositionOptions.ComputeFullV,
+)
+assert bdcsvd.info() == eigenpy.ComputationInfo.Success
 
 # Solve
 X = rng.random((dim, 20))
@@ -18,8 +23,6 @@ assert eigenpy.is_approx(X, X_est)
 assert eigenpy.is_approx(A.dot(X_est), B)
 
 # Others
-assert bdcsvd.info() == eigenpy.ComputationInfo.Success
-
 cols = bdcsvd.cols()
 rows = bdcsvd.rows()
 

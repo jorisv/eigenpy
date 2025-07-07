@@ -15,8 +15,8 @@
 namespace eigenpy {
 
 template <typename _MatrixType,
-          typename _Ordering = Eigen::AMDOrdering<
-              typename _MatrixType::StorageIndex>>
+          typename _Ordering =
+              Eigen::AMDOrdering<typename _MatrixType::StorageIndex>>
 struct SparseQRVisitor : public boost::python::def_visitor<
                              SparseQRVisitor<_MatrixType, _Ordering>> {
   typedef SparseQRVisitor<_MatrixType, _Ordering> Visitor;
