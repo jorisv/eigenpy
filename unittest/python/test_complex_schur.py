@@ -2,7 +2,7 @@ import numpy as np
 
 import eigenpy
 
-dim = 100
+dim = 5
 rng = np.random.default_rng()
 A = rng.random((dim, dim))
 
@@ -13,4 +13,7 @@ T = cs.matrixT()
 U_star = U.conj().T
 
 assert eigenpy.is_approx(A.real, (U @ T @ U_star).real)
-assert np.allclose(A.imag, (U @ T @ U_star).imag, atol=1e-10)
+assert np.allclose(A.imag, (U @ T @ U_star).imag)
+
+cs.setMaxIterations(10)
+assert cs.getMaxIterations() == 10

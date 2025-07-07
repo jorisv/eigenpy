@@ -6,21 +6,24 @@ dim = 100
 rng = np.random.default_rng()
 A = rng.random((dim, dim))
 B = rng.random((dim, dim))
+B = (B + B.T) * 0.5 + np.diag(10.0 + rng.random(dim))  # Make B not singular
 
 ges = eigenpy.GeneralizedEigenSolver(A, B)
 
+assert ges.info() == eigenpy.ComputationInfo.Success
+
 alphas = ges.alphas()
 betas = ges.betas()
-V = ges.eigenvectors()
 
-eigenvalues = alphas / betas
-if np.all(np.abs(betas) >= 1e-15):
-    for i in range(dim):
-        v = V[:, i]
-        lam = eigenvalues[i]
+vec = ges.eigenvectors()
 
-        Av = A @ v
-        lam_Bv = lam * (B @ v)
+val_est = alphas / betas
+for i in range(dim):
+    v = vec[:, i]
+    lam = val_est[i]
 
-        assert eigenpy.is_approx(Av.real, lam_Bv.real)
-        assert eigenpy.is_approx(Av.imag, lam_Bv.imag)
+    Av = A @ v
+    lam_Bv = lam * (B @ v)
+
+    assert eigenpy.is_approx(Av.real, lam_Bv.real)
+    assert eigenpy.is_approx(Av.imag, lam_Bv.imag)

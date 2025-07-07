@@ -32,10 +32,16 @@ struct GeneralizedEigenSolverVisitor
             "Computes the generalized eigendecomposition of given matrix "
             "pair. "))
 
+        .def("eigenvectors", &Solver::eigenvectors, bp::arg("self"),
+             "Returns an expression of the computed generalized eigenvectors. ")
+        // TODO: Expose so that the return type are convertible to np arrays
+        .def("eigenvalues", &Solver::eigenvalues, bp::arg("self"),
+             "Returns an expression of the computed generalized eigenvalues. ")
+
         .def("alphas", &Solver::alphas, bp::arg("self"),
-             "Returns the vectors containing the alpha values ")
+             "Returns the vectors containing the alpha values. ")
         .def("betas", &Solver::betas, bp::arg("self"),
-             "Returns the vectors containing the beta values ")
+             "Returns the vectors containing the beta values. ")
 
         .def("compute",
              &GeneralizedEigenSolverVisitor::compute_proxy<MatrixType>,
@@ -49,9 +55,6 @@ struct GeneralizedEigenSolverVisitor
              bp::args("self", "A", "B", "computeEigenvectors"),
              "Computes generalized eigendecomposition of given matrix. .",
              bp::return_self<>())
-
-        .def("eigenvectors", &Solver::eigenvectors, bp::arg("self"),
-             "Returns an expression of the computed generalized eigenvectors. ")
 
         .def("info", &Solver::info, bp::arg("self"),
              "NumericalIssue if the input contains INF or NaN values or "
