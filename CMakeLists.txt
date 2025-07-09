@@ -443,9 +443,6 @@ install(
 add_header_group(${PROJECT_NAME}_HEADERS)
 add_source_group(${PROJECT_NAME}_SOURCES)
 
-# Install package for ROS
-install(FILES package.xml DESTINATION share/eigenpy)
-
 # ----------------------------------------------------
 # --- PYTHON LIBRARY ---------------------------------
 # ----------------------------------------------------
