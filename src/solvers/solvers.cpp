@@ -20,7 +20,6 @@ void exposeSolvers() {
   using namespace Eigen;
 
   using Eigen::Lower;
-  using Eigen::Upper;
 
   using Eigen::BiCGSTAB;
   using Eigen::ConjugateGradient;
@@ -32,13 +31,13 @@ void exposeSolvers() {
 
   using IdentityBiCGSTAB = BiCGSTAB<MatrixXd, IdentityPreconditioner>;
   using IdentityConjugateGradient =
-      ConjugateGradient<MatrixXd, Lower | Upper, IdentityPreconditioner>;
+      ConjugateGradient<MatrixXd, Lower, IdentityPreconditioner>;
   using IdentityLeastSquaresConjugateGradient =
       LeastSquaresConjugateGradient<MatrixXd, IdentityPreconditioner>;
   using DiagonalLeastSquaresConjugateGradient = LeastSquaresConjugateGradient<
       MatrixXd, DiagonalPreconditioner<typename MatrixXd::Scalar>>;
 
-  ConjugateGradientVisitor<ConjugateGradient<MatrixXd, Lower | Upper>>::expose(
+  ConjugateGradientVisitor<ConjugateGradient<MatrixXd, Lower>>::expose(
       "ConjugateGradient");
   ConjugateGradientVisitor<IdentityConjugateGradient>::expose(
       "IdentityConjugateGradient");
