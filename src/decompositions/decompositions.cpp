@@ -26,6 +26,8 @@ void exposeQRSolvers();
 void exposeMINRESSolver();
 void exposeSimplicialLLTSolver();
 void exposeSimplicialLDLTSolver();
+void exposeIncompleteCholesky();
+void exposeIncompleteLUT();
 void exposeSparseLUSolver();
 void exposeSparseQRSolver();
 void exposePermutationMatrix();
@@ -72,6 +74,8 @@ void exposeDecompositions() {
   exposeSimplicialLDLTSolver();
   exposeSparseLUSolver();
   exposeSparseQRSolver();
+  exposeIncompleteCholesky();
+  exposeIncompleteLUT();
 
   exposePermutationMatrix();
 

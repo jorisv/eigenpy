@@ -213,7 +213,9 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
     include/eigenpy/decompositions/sparse/LDLT.hpp
     include/eigenpy/decompositions/sparse/LU.hpp
     include/eigenpy/decompositions/sparse/SimplicialCholesky.hpp
-    include/eigenpy/decompositions/sparse/SparseSolverBase.hpp)
+    include/eigenpy/decompositions/sparse/SparseSolverBase.hpp
+    include/eigenpy/decompositions/sparse/IncompleteCholesky.hpp
+    include/eigenpy/decompositions/sparse/IncompleteLUT.hpp)
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   list(APPEND ${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
@@ -340,7 +342,9 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SOURCES
     src/decompositions/self-adjoint-eigen-solver.cpp
     src/decompositions/permutation-matrix.cpp
     src/decompositions/simplicial-llt-solver.cpp
-    src/decompositions/simplicial-ldlt-solver.cpp)
+    src/decompositions/simplicial-ldlt-solver.cpp
+    src/decompositions/incomplete-cholesky.cpp
+    src/decompositions/incomplete-lut.cpp)
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   list(APPEND ${PROJECT_NAME}_DECOMPOSITIONS_SOURCES
