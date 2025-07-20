@@ -10,7 +10,7 @@ A = rng.random((dim, dim))
 A = (A + A.T) * 0.5 + np.diag(5.0 + rng.random(dim))
 A = csc_matrix(A)
 
-ichol = eigenpy.IncompleteCholesky(A)
+ichol = eigenpy.solvers.IncompleteCholesky(A)
 assert ichol.info() == eigenpy.ComputationInfo.Success
 assert ichol.rows() == dim
 assert ichol.cols() == dim

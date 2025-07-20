@@ -191,10 +191,13 @@ set(${PROJECT_NAME}_SOLVERS_HEADERS
     include/eigenpy/solvers/IterativeSolverBase.hpp
     include/eigenpy/solvers/LeastSquaresConjugateGradient.hpp
     include/eigenpy/solvers/BiCGSTAB.hpp
+    include/eigenpy/solvers/MINRES.hpp
     include/eigenpy/solvers/ConjugateGradient.hpp
     include/eigenpy/solvers/SparseSolverBase.hpp
     include/eigenpy/solvers/BasicPreconditioners.hpp
-    include/eigenpy/solvers/BFGSPreconditioners.hpp)
+    include/eigenpy/solvers/BFGSPreconditioners.hpp
+    include/eigenpy/solvers/IncompleteCholesky.hpp
+    include/eigenpy/solvers/IncompleteLUT.hpp)
 
 set(${PROJECT_NAME}_EIGEN_HEADERS include/eigenpy/eigen/EigenBase.hpp)
 
@@ -213,9 +216,7 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
     include/eigenpy/decompositions/sparse/LDLT.hpp
     include/eigenpy/decompositions/sparse/LU.hpp
     include/eigenpy/decompositions/sparse/SimplicialCholesky.hpp
-    include/eigenpy/decompositions/sparse/SparseSolverBase.hpp
-    include/eigenpy/decompositions/sparse/IncompleteCholesky.hpp
-    include/eigenpy/decompositions/sparse/IncompleteLUT.hpp)
+    include/eigenpy/decompositions/sparse/SparseSolverBase.hpp)
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   list(APPEND ${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
@@ -248,7 +249,6 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_HEADERS
     include/eigenpy/decompositions/CompleteOrthogonalDecomposition.hpp
     include/eigenpy/decompositions/FullPivHouseholderQR.hpp
     include/eigenpy/decompositions/SelfAdjointEigenSolver.hpp
-    include/eigenpy/decompositions/MINRES.hpp
     include/eigenpy/decompositions/SVDBase.hpp
     include/eigenpy/decompositions/BDCSVD.hpp
     include/eigenpy/decompositions/JacobiSVD.hpp)
@@ -335,16 +335,13 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SOURCES
     src/decompositions/tridiagonalization.cpp
     src/decompositions/real-schur.cpp
     src/decompositions/partialpivlu-solver.cpp
-    src/decompositions/minres-solver.cpp
     src/decompositions/sparse-lu-solver.cpp
     src/decompositions/sparse-qr-solver.cpp
     src/decompositions/qr-solvers.cpp
     src/decompositions/self-adjoint-eigen-solver.cpp
     src/decompositions/permutation-matrix.cpp
     src/decompositions/simplicial-llt-solver.cpp
-    src/decompositions/simplicial-ldlt-solver.cpp
-    src/decompositions/incomplete-cholesky.cpp
-    src/decompositions/incomplete-lut.cpp)
+    src/decompositions/simplicial-ldlt-solver.cpp)
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   list(APPEND ${PROJECT_NAME}_DECOMPOSITIONS_SOURCES

@@ -14,6 +14,10 @@
 #endif
 
 #include "eigenpy/solvers/BiCGSTAB.hpp"
+#include "eigenpy/solvers/MINRES.hpp"
+
+#include "eigenpy/solvers/IncompleteLUT.hpp"
+#include "eigenpy/solvers/IncompleteCholesky.hpp"
 
 namespace eigenpy {
 void exposeSolvers() {
@@ -54,6 +58,12 @@ void exposeSolvers() {
 
   BiCGSTABVisitor<BiCGSTAB<MatrixXd>>::expose("BiCGSTAB");
   BiCGSTABVisitor<IdentityBiCGSTAB>::expose("IdentityBiCGSTAB");
+
+  MINRESSolverVisitor<MatrixXd>::expose("MINRES");
+
+  typedef SparseMatrix<double, ColMajor> ColMajorSparseMatrix;
+  IncompleteLUTVisitor<ColMajorSparseMatrix>::expose("IncompleteLUT");
+  IncompleteCholeskyVisitor<ColMajorSparseMatrix>::expose("IncompleteCholesky");
 }
 }  // namespace eigenpy
 

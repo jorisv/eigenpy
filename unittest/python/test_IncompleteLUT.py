@@ -10,7 +10,7 @@ A = rng.random((dim, dim))
 A = (A + A.T) * 0.5 + np.diag(5.0 + rng.random(dim))
 A = csc_matrix(A)
 
-ilut = eigenpy.IncompleteLUT(A)
+ilut = eigenpy.solvers.IncompleteLUT(A)
 assert ilut.info() == eigenpy.ComputationInfo.Success
 assert ilut.rows() == dim
 assert ilut.cols() == dim
@@ -40,10 +40,10 @@ ilut.analyzePattern(A)
 ilut.factorize(A)
 assert ilut.info() == eigenpy.ComputationInfo.Success
 
-ilut_params = eigenpy.IncompleteLUT(A, 1e-4, 15)
+ilut_params = eigenpy.solvers.IncompleteLUT(A, 1e-4, 15)
 assert ilut_params.info() == eigenpy.ComputationInfo.Success
 
-ilut_set = eigenpy.IncompleteLUT()
+ilut_set = eigenpy.solvers.IncompleteLUT()
 ilut_set.setDroptol(1e-3)
 ilut_set.setFillfactor(20)
 ilut_set.compute(A)

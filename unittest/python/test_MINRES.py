@@ -6,7 +6,7 @@ dim = 100
 rng = np.random.default_rng()
 A = np.eye(dim)
 
-minres = eigenpy.MINRES(A)
+minres = eigenpy.solvers.MINRES(A)
 
 X = rng.random((dim, 20))
 B = A.dot(X)

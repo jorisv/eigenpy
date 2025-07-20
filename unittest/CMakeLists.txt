@@ -217,12 +217,10 @@ if(BUILD_TESTING_SCIPY)
   add_python_eigenpy_unit_test(
     "py-SimplicialLDLT"
     "unittest/python/decompositions/sparse/test_SimplicialLDLT.py")
-  add_python_eigenpy_unit_test(
-    "py-IncompleteCholesky"
-    "unittest/python/decompositions/sparse/test_IncompleteCholesky.py")
-  add_python_eigenpy_unit_test(
-    "py-IncompleteLUT"
-    "unittest/python/decompositions/sparse/test_IncompleteLUT.py")
+  add_python_eigenpy_unit_test("py-IncompleteCholesky"
+                               "unittest/python/test_IncompleteCholesky.py")
+  add_python_eigenpy_unit_test("py-IncompleteLUT"
+                               "unittest/python/test_IncompleteLUT.py")
   add_python_eigenpy_unit_test(
     "py-SparseLU" "unittest/python/decompositions/sparse/test_SparseLU.py")
   add_python_eigenpy_unit_test(
