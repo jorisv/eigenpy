@@ -19,7 +19,7 @@ EigenPy — Versatile and efficient Python bindings between Numpy and Eigen
 - full support Eigen::Ref avoiding memory allocation
 - full support of the Eigen::Tensor module
 - exposition of the Geometry module of Eigen for easy code prototyping
-- standard matrix decomposion routines of Eigen such as the Cholesky decomposition (SVD and QR decompositions [can be added](#contributing))
+- standard matrix decomposion routines of Eigen such as the Cholesky, SVD and QR decompositions
 - full support of SWIG objects
 - full support of runtime declaration of Numpy scalar types
 - extended API to expose several STL types and some of their Boost equivalents: `optional` types, `std::pair`, maps, variants...
