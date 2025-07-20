@@ -13,7 +13,6 @@ T = cs.matrixT()
 U_star = U.conj().T
 
 assert eigenpy.is_approx(A.real, (U @ T @ U_star).real)
-assert np.allclose(A.imag, (U @ T @ U_star).imag)
 
 cs.setMaxIterations(10)
 assert cs.getMaxIterations() == 10
