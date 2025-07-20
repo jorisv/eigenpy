@@ -248,7 +248,7 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_HEADERS
     include/eigenpy/decompositions/CompleteOrthogonalDecomposition.hpp
     include/eigenpy/decompositions/FullPivHouseholderQR.hpp
     include/eigenpy/decompositions/SelfAdjointEigenSolver.hpp
-    include/eigenpy/decompositions/minres.hpp
+    include/eigenpy/decompositions/MINRES.hpp
     include/eigenpy/decompositions/SVDBase.hpp
     include/eigenpy/decompositions/BDCSVD.hpp
     include/eigenpy/decompositions/JacobiSVD.hpp)

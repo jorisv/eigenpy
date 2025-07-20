@@ -2,7 +2,7 @@
  * Copyright 2024 INRIA
  */
 
-#include "eigenpy/decompositions/minres.hpp"
+#include "eigenpy/decompositions/MINRES.hpp"
 
 namespace eigenpy {
 void exposeMINRESSolver() {
