@@ -15,7 +15,7 @@ namespace eigenpy {
 template <typename BiCGSTAB>
 struct BiCGSTABVisitor
     : public boost::python::def_visitor<BiCGSTABVisitor<BiCGSTAB>> {
-  typedef Eigen::MatrixXd MatrixType;
+  typedef typename BiCGSTAB::MatrixType MatrixType;
 
   template <class PyClass>
   void visit(PyClass& cl) const {
@@ -28,8 +28,8 @@ struct BiCGSTABVisitor
             "followed by a call to compute()."));
   }
 
-  static void expose() {
-    bp::class_<BiCGSTAB, boost::noncopyable>("BiCGSTAB", bp::no_init)
+  static void expose(const std::string& name = "BiCGSTAB") {
+    bp::class_<BiCGSTAB, boost::noncopyable>(name.c_str(), bp::no_init)
         .def(IterativeSolverVisitor<BiCGSTAB>())
         .def(BiCGSTABVisitor<BiCGSTAB>())
         .def(IdVisitor<BiCGSTAB>());

@@ -18,23 +18,43 @@
 namespace eigenpy {
 void exposeSolvers() {
   using namespace Eigen;
-  ConjugateGradientVisitor<
-      ConjugateGradient<MatrixXd, Lower | Upper>>::expose();
+
+  using Eigen::Lower;
+  using Eigen::Upper;
+
+  using Eigen::BiCGSTAB;
+  using Eigen::ConjugateGradient;
+  using Eigen::LeastSquaresConjugateGradient;
+
+  using Eigen::DiagonalPreconditioner;
+  using Eigen::IdentityPreconditioner;
+  using Eigen::LeastSquareDiagonalPreconditioner;
+
+  using IdentityBiCGSTAB = BiCGSTAB<MatrixXd, IdentityPreconditioner>;
+  using IdentityConjugateGradient =
+      ConjugateGradient<MatrixXd, Lower | Upper, IdentityPreconditioner>;
+  using IdentityLeastSquaresConjugateGradient =
+      LeastSquaresConjugateGradient<MatrixXd, IdentityPreconditioner>;
+  using DiagonalLeastSquaresConjugateGradient = LeastSquaresConjugateGradient<
+      MatrixXd, DiagonalPreconditioner<typename MatrixXd::Scalar>>;
+
+  ConjugateGradientVisitor<ConjugateGradient<MatrixXd, Lower | Upper>>::expose(
+      "ConjugateGradient");
+  ConjugateGradientVisitor<IdentityConjugateGradient>::expose(
+      "IdentityConjugateGradient");
+
 #if EIGEN_VERSION_AT_LEAST(3, 3, 5)
   LeastSquaresConjugateGradientVisitor<LeastSquaresConjugateGradient<
-      MatrixXd, LeastSquareDiagonalPreconditioner<MatrixXd::Scalar>>>::expose();
+      MatrixXd, LeastSquareDiagonalPreconditioner<MatrixXd::Scalar>>>::
+      expose("LeastSquaresConjugateGradient");
+  LeastSquaresConjugateGradientVisitor<IdentityLeastSquaresConjugateGradient>::
+      expose("IdentityLeastSquaresConjugateGradient");
+  LeastSquaresConjugateGradientVisitor<DiagonalLeastSquaresConjugateGradient>::
+      expose("DiagonalLeastSquaresConjugateGradient");
 #endif
 
-  // Conjugate gradient with limited BFGS preconditioner
-  ConjugateGradientVisitor<
-      ConjugateGradient<MatrixXd, Lower | Upper, IdentityPreconditioner>>::
-      expose("IdentityConjugateGradient");
-  //    ConjugateGradientVisitor<
-  //    ConjugateGradient<MatrixXd,Lower|Upper,LimitedBFGSPreconditioner<double,Dynamic,Lower|Upper>
-  //    > >::expose("LimitedBFGSConjugateGradient");
-
-  BiCGSTABVisitor<BiCGSTAB<
-      MatrixXd, LeastSquareDiagonalPreconditioner<MatrixXd::Scalar>>>::expose();
+  BiCGSTABVisitor<BiCGSTAB<MatrixXd>>::expose("BiCGSTAB");
+  BiCGSTABVisitor<IdentityBiCGSTAB>::expose("IdentityBiCGSTAB");
 }
 }  // namespace eigenpy
 

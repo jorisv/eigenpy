@@ -16,7 +16,7 @@ template <typename LeastSquaresConjugateGradient>
 struct LeastSquaresConjugateGradientVisitor
     : public boost::python::def_visitor<
           LeastSquaresConjugateGradientVisitor<LeastSquaresConjugateGradient>> {
-  typedef Eigen::MatrixXd MatrixType;
+  typedef typename LeastSquaresConjugateGradient::MatrixType MatrixType;
 
   template <class PyClass>
   void visit(PyClass& cl) const {
@@ -29,9 +29,10 @@ struct LeastSquaresConjugateGradientVisitor
             "followed by a call to compute()."));
   }
 
-  static void expose() {
-    bp::class_<LeastSquaresConjugateGradient, boost::noncopyable>(
-        "LeastSquaresConjugateGradient", bp::no_init)
+  static void expose(
+      const std::string& name = "LeastSquaresConjugateGradient") {
+    bp::class_<LeastSquaresConjugateGradient, boost::noncopyable>(name.c_str(),
+                                                                  bp::no_init)
         .def(IterativeSolverVisitor<LeastSquaresConjugateGradient>())
         .def(LeastSquaresConjugateGradientVisitor<
              LeastSquaresConjugateGradient>())
