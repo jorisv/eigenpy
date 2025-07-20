@@ -33,8 +33,6 @@ struct PartialPivLUSolverVisitor : public boost::python::def_visitor<
         .def(bp::init<Eigen::DenseIndex>(
             bp::args("self", "size"),
             "Default constructor with memory preallocation"))
-        .def(bp::init<const MatrixType>(bp::args("self", "matrix"),
-                                        "Constructor."))
         .def(bp::init<MatrixType>(
             bp::args("self", "matrix"),
             "Constructs a LU factorization from a given matrix."))
@@ -45,6 +43,13 @@ struct PartialPivLUSolverVisitor : public boost::python::def_visitor<
              "Returns the determinant of the matrix of which *this is the LU "
              "decomposition.")
         .def(
+            "compute",
+            (Solver & (Solver::*)(const Eigen::EigenBase<MatrixType> &matrix)) &
+                Solver::compute,
+            bp::args("self", "matrix"),
+            "Computes the LU factorization of given matrix.",
+            bp::return_self<>())
+        .def(
             "inverse",
             +[](const Solver &self) -> MatrixType { return self.inverse(); },
             bp::arg("self"),
@@ -54,7 +59,6 @@ struct PartialPivLUSolverVisitor : public boost::python::def_visitor<
              "Returns the LU decomposition matrix.",
              bp::return_internal_reference<>())
 
-        // TODO: Expose so that the return type are convertible to np arrays
         .def("permutationP", &Solver::permutationP, bp::arg("self"),
              "Returns the permutation P.",
              bp::return_value_policy<bp::copy_const_reference>())

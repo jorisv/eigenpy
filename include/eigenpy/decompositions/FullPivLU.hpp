@@ -33,8 +33,6 @@ struct FullPivLUSolverVisitor
         .def(bp::init<Eigen::DenseIndex, Eigen::DenseIndex>(
             bp::args("self", "rows", "cols"),
             "Default constructor with memory preallocation"))
-        .def(bp::init<const MatrixType>(bp::args("self", "matrix"),
-                                        "Constructor."))
         .def(bp::init<MatrixType>(
             bp::args("self", "matrix"),
             "Constructs a LU factorization from a given matrix."))
@@ -57,7 +55,7 @@ struct FullPivLUSolverVisitor
              "is the LU decomposition.")
         .def(
             "image",
-            +[](const Solver &self, const MatrixType &mat) -> MatrixType {
+            +[](Solver &self, const MatrixType &mat) -> MatrixType {
               return self.image(mat);
             },
             bp::args("self", "originalMatrix"),
@@ -66,7 +64,7 @@ struct FullPivLUSolverVisitor
             "image (column-space).")
         .def(
             "inverse",
-            +[](const Solver &self) -> MatrixType { return self.inverse(); },
+            +[](Solver &self) -> MatrixType { return self.inverse(); },
             bp::arg("self"),
             "Returns the inverse of the matrix of which *this is the LU "
             "decomposition.")
@@ -76,8 +74,7 @@ struct FullPivLUSolverVisitor
         .def("isSurjective", &Solver::isSurjective, bp::arg("self"))
 
         .def(
-            "kernel",
-            +[](const Solver &self) -> MatrixType { return self.kernel(); },
+            "kernel", +[](Solver &self) -> MatrixType { return self.kernel(); },
             bp::arg("self"),
             "Returns the kernel of the matrix, also called its null-space. "
             "The columns of the returned matrix will form a basis of the "
@@ -90,7 +87,6 @@ struct FullPivLUSolverVisitor
         .def("maxPivot", &Solver::maxPivot, bp::arg("self"))
         .def("nonzeroPivots", &Solver::nonzeroPivots, bp::arg("self"))
 
-        // TODO: Expose so that the return type are convertible to np arrays
         .def("permutationP", &Solver::permutationP, bp::arg("self"),
              "Returns the permutation P.",
              bp::return_value_policy<bp::copy_const_reference>())

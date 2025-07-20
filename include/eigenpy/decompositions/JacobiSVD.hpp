@@ -15,11 +15,10 @@
 
 namespace eigenpy {
 
-template <typename _MatrixType>
+template <typename JacobiSVD>
 struct JacobiSVDVisitor
-    : public boost::python::def_visitor<JacobiSVDVisitor<_MatrixType>> {
-  typedef _MatrixType MatrixType;
-  typedef Eigen::JacobiSVD<MatrixType> Solver;
+    : public boost::python::def_visitor<JacobiSVDVisitor<JacobiSVD>> {
+  typedef typename JacobiSVD::MatrixType MatrixType;
   typedef typename MatrixType::Scalar Scalar;
 
   template <class PyClass>
@@ -46,10 +45,11 @@ struct JacobiSVDVisitor
             "and the constructor. If possible, prefer using the Options "
             "template parameter."))
 
-        .def("cols", &Solver::cols, bp::arg("self"),
+        .def("cols", &JacobiSVD::cols, bp::arg("self"),
              "Returns the number of columns. ")
         .def("compute",
-             (Solver & (Solver::*)(const MatrixType &matrix)) & Solver::compute,
+             (JacobiSVD & (JacobiSVD::*)(const MatrixType &matrix)) &
+                 JacobiSVD::compute,
              bp::args("self", "matrix"),
              "Method performing the decomposition of given matrix. Computes "
              "Thin/Full "
@@ -57,17 +57,17 @@ struct JacobiSVDVisitor
              "or the class constructor. ",
              bp::return_self<>())
         .def("compute",
-             (Solver & (Solver::*)(const MatrixType &matrix,
-                                   unsigned int computationOptions)) &
-                 Solver::compute,
+             (JacobiSVD & (JacobiSVD::*)(const MatrixType &matrix,
+                                         unsigned int computationOptions)) &
+                 JacobiSVD::compute,
              bp::args("self", "matrix", "computationOptions"),
              "Method performing the decomposition of given matrix, as "
              "specified by the computationOptions parameter.  ",
              bp::return_self<>())
-        .def("rows", &Solver::rows, bp::arg("self"),
+        .def("rows", &JacobiSVD::rows, bp::arg("self"),
              "Returns the number of rows. . ")
 
-        .def(SVDBaseVisitor<Solver>());
+        .def(SVDBaseVisitor<JacobiSVD>());
   }
 
   static void expose() {
@@ -77,7 +77,7 @@ struct JacobiSVDVisitor
   }
 
   static void expose(const std::string &name) {
-    bp::class_<Solver, boost::noncopyable>(
+    bp::class_<JacobiSVD, boost::noncopyable>(
         name.c_str(),
         "Two-sided Jacobi SVD decomposition of a rectangular matrix. \n\n"
         "SVD decomposition consists in decomposing any n-by-p matrix A as a "
@@ -109,7 +109,7 @@ struct JacobiSVDVisitor
         "solving.",
         bp::no_init)
         .def(JacobiSVDVisitor())
-        .def(IdVisitor<Solver>());
+        .def(IdVisitor<JacobiSVD>());
   }
 };
 

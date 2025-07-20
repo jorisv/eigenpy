@@ -49,6 +49,16 @@ struct SparseLUVisitor : public boost::python::def_visitor<
              "Returns the natural log of the absolute value of the determinant "
              "of the matrix of which *this is the QR decomposition")
 
+        .def("rows", &Solver::rows, bp::arg("self"),
+             "Returns the number of rows of the matrix.")
+        .def("cols", &Solver::cols, bp::arg("self"),
+             "Returns the number of cols of the matrix.")
+
+        .def("nnzL", &Solver::nnzL, bp::arg("self"),
+             "The number of non zero elements in L")
+        .def("nnzU", &Solver::nnzU, bp::arg("self"),
+             "The number of non zero elements in L")
+
         .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
              "Returns a reference to the column matrix permutation PTc such "
              "that Pr A PTc = LU.",
@@ -70,12 +80,6 @@ struct SparseLUVisitor : public boost::python::def_visitor<
              "Performs a numeric decomposition of a given matrix.\n"
              "The given matrix must has the same sparcity than the matrix on "
              "which the symbolic decomposition has been performed.")
-
-        // TODO: Expose so that the return type are convertible to np arrays
-        // transpose()
-        // adjoint()
-        // matrixL()
-        // matrixU()
 
         .def("isSymmetric", &Solver::isSymmetric, bp::args("self", "sym"),
              "Indicate that the pattern of the input matrix is symmetric. ")

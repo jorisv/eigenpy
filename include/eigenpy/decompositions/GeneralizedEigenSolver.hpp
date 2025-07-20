@@ -34,9 +34,10 @@ struct GeneralizedEigenSolverVisitor
 
         .def("eigenvectors", &Solver::eigenvectors, bp::arg("self"),
              "Returns an expression of the computed generalized eigenvectors. ")
-        // TODO: Expose so that the return type are convertible to np arrays
-        .def("eigenvalues", &Solver::eigenvalues, bp::arg("self"),
-             "Returns an expression of the computed generalized eigenvalues. ")
+        .def(
+            "eigenvalues",
+            +[](const Solver& c) { return c.eigenvalues().eval(); },
+            "Returns the computed generalized eigenvalues.")
 
         .def("alphas", &Solver::alphas, bp::arg("self"),
              "Returns the vectors containing the alpha values. ")

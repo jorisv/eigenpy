@@ -57,10 +57,6 @@ struct SparseQRVisitor : public boost::python::def_visitor<
              "The given matrix must has the same sparcity than the matrix on "
              "which the symbolic decomposition has been performed.")
 
-        // TODO: Expose so that the return type are convertible to np arrays
-        // matrixQ
-        // matrixR
-
         .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
              "Returns a reference to the column matrix permutation PTc such "
              "that Pr A PTc = LU.",
