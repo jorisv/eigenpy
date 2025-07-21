@@ -2,20 +2,21 @@ import numpy as np
 
 import eigenpy
 
+THIN_U = eigenpy.DecompositionOptions.ComputeThinU
+THIN_V = eigenpy.DecompositionOptions.ComputeThinV
+FULL_U = eigenpy.DecompositionOptions.ComputeFullU
+FULL_V = eigenpy.DecompositionOptions.ComputeFullV
+
 _options = [
     0,
-    eigenpy.DecompositionOptions.ComputeThinU,
-    eigenpy.DecompositionOptions.ComputeThinV,
-    eigenpy.DecompositionOptions.ComputeFullU,
-    eigenpy.DecompositionOptions.ComputeFullV,
-    eigenpy.DecompositionOptions.ComputeThinU
-    | eigenpy.DecompositionOptions.ComputeThinV,
-    eigenpy.DecompositionOptions.ComputeFullU
-    | eigenpy.DecompositionOptions.ComputeFullV,
-    eigenpy.DecompositionOptions.ComputeThinU
-    | eigenpy.DecompositionOptions.ComputeFullV,
-    eigenpy.DecompositionOptions.ComputeFullU
-    | eigenpy.DecompositionOptions.ComputeThinV,
+    THIN_U,
+    THIN_V,
+    FULL_U,
+    FULL_V,
+    THIN_U | THIN_V,
+    FULL_U | FULL_V,
+    THIN_U | FULL_V,
+    FULL_U | THIN_V,
 ]
 
 _classes = [
@@ -26,32 +27,30 @@ _classes = [
 ]
 
 
-def test_jacobi(cls, options):
+def is_valid_combination(cls, opt):
+    if cls == eigenpy.FullPivHhJacobiSVD:
+        has_thin_u = bool(opt & THIN_U)
+        has_thin_v = bool(opt & THIN_V)
+
+        if has_thin_u or has_thin_v:
+            return False
+
+    return True
+
+
+def test_jacobi(cls, opt):
     dim = 100
     rng = np.random.default_rng()
     A = rng.random((dim, dim))
     A = (A + A.T) * 0.5 + np.diag(10.0 + rng.random(dim))
 
-    if cls == eigenpy.FullPivHhJacobiSVD:
-        if options != 0 and not (
-            options
-            & (
-                eigenpy.DecompositionOptions.ComputeFullU
-                | eigenpy.DecompositionOptions.ComputeFullV
-            )
-        ):
-            return
-
-    jacobisvd = cls(A, options)
+    jacobisvd = cls(A, opt)
     assert jacobisvd.info() == eigenpy.ComputationInfo.Success
 
-    if options & (
-        eigenpy.DecompositionOptions.ComputeThinU
-        | eigenpy.DecompositionOptions.ComputeFullU
-    ) and options & (
-        eigenpy.DecompositionOptions.ComputeThinV
-        | eigenpy.DecompositionOptions.ComputeFullV
-    ):
+    has_u = opt & (THIN_U | FULL_U)
+    has_v = opt & (THIN_V | FULL_V)
+
+    if has_u and has_v:
         X = rng.random((dim, 20))
         B = A @ X
         X_est = jacobisvd.solve(B)
@@ -64,13 +63,11 @@ def test_jacobi(cls, options):
         assert eigenpy.is_approx(x, x_est)
         assert eigenpy.is_approx(A @ x_est, b)
 
-    rows = jacobisvd.rows()
-    cols = jacobisvd.cols()
-    assert cols == dim
-    assert rows == dim
+    assert jacobisvd.rows() == dim
+    assert jacobisvd.cols() == dim
 
     _jacobisvd_compute = jacobisvd.compute(A)
-    _jacobisvd_compute_options = jacobisvd.compute(A, options)
+    _jacobisvd_compute_options = jacobisvd.compute(A, opt)
 
     rank = jacobisvd.rank()
     singularvalues = jacobisvd.singularValues()
@@ -84,37 +81,19 @@ def test_jacobi(cls, options):
 
     compute_u = jacobisvd.computeU()
     compute_v = jacobisvd.computeV()
-    expected_compute_u = bool(
-        options
-        & (
-            eigenpy.DecompositionOptions.ComputeThinU
-            | eigenpy.DecompositionOptions.ComputeFullU
-        )
-    )
-    expected_compute_v = bool(
-        options
-        & (
-            eigenpy.DecompositionOptions.ComputeThinV
-            | eigenpy.DecompositionOptions.ComputeFullV
-        )
-    )
+    expected_compute_u = bool(has_u)
+    expected_compute_v = bool(has_v)
     assert compute_u == expected_compute_u
     assert compute_v == expected_compute_v
 
     if compute_u:
         matrixU = jacobisvd.matrixU()
-        if options & eigenpy.DecompositionOptions.ComputeFullU:
-            assert matrixU.shape == (dim, dim)
-        elif options & eigenpy.DecompositionOptions.ComputeThinU:
-            assert matrixU.shape == (dim, dim)
+        assert matrixU.shape == (dim, dim)
         assert eigenpy.is_approx(matrixU.T @ matrixU, np.eye(matrixU.shape[1]))
 
     if compute_v:
         matrixV = jacobisvd.matrixV()
-        if options & eigenpy.DecompositionOptions.ComputeFullV:
-            assert matrixV.shape == (dim, dim)
-        elif options & eigenpy.DecompositionOptions.ComputeThinV:
-            assert matrixV.shape == (dim, dim)
+        assert matrixV.shape == (dim, dim)
         assert eigenpy.is_approx(matrixV.T @ matrixV, np.eye(matrixV.shape[1]))
 
     if compute_u and compute_v:
@@ -138,8 +117,8 @@ def test_jacobi(cls, options):
     assert id1 == decomp1.id()
     assert id2 == decomp2.id()
 
-    decomp3 = cls(dim, dim, options)
-    decomp4 = cls(dim, dim, options)
+    decomp3 = cls(dim, dim, opt)
+    decomp4 = cls(dim, dim, opt)
     id3 = decomp3.id()
     id4 = decomp4.id()
     assert id3 != id4
@@ -147,6 +126,7 @@ def test_jacobi(cls, options):
     assert id4 == decomp4.id()
 
 
-for opt in _options:
-    for cls in _classes:
-        test_jacobi(cls, opt)
+for cls in _classes:
+    for opt in _options:
+        if is_valid_combination(cls, opt):
+            test_jacobi(cls, opt)
