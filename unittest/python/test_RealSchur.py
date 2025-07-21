@@ -30,8 +30,8 @@ assert rs.info() == eigenpy.ComputationInfo.Success
 U = rs.matrixU()
 T = rs.matrixT()
 
-assert eigenpy.is_approx(A, U @ T @ U.T, 1e-10)
-assert eigenpy.is_approx(U @ U.T, np.eye(dim), 1e-10)
+assert eigenpy.is_approx(A, U @ T @ U.T)
+assert eigenpy.is_approx(U @ U.T, np.eye(dim))
 
 verify_is_quasi_triangular(T)
 
@@ -48,20 +48,20 @@ U1 = rs1.matrixU()
 T2 = rs2.matrixT()
 U2 = rs2.matrixU()
 
-assert eigenpy.is_approx(T1, T2, 1e-12)
-assert eigenpy.is_approx(U1, U2, 1e-12)
+assert eigenpy.is_approx(T1, T2)
+assert eigenpy.is_approx(U1, U2)
 
 rs_no_u = eigenpy.RealSchur(A, False)
 assert rs_no_u.info() == eigenpy.ComputationInfo.Success
 T_no_u = rs_no_u.matrixT()
 
-assert eigenpy.is_approx(T, T_no_u, 1e-12)
+assert eigenpy.is_approx(T, T_no_u)
 
 rs_compute_no_u = eigenpy.RealSchur(dim)
 result_no_u = rs_compute_no_u.compute(A, False)
 assert result_no_u.info() == eigenpy.ComputationInfo.Success
 T_compute_no_u = rs_compute_no_u.matrixT()
-assert eigenpy.is_approx(T, T_compute_no_u, 1e-12)
+assert eigenpy.is_approx(T, T_compute_no_u)
 
 rs_iter = eigenpy.RealSchur(dim)
 rs_iter.setMaxIterations(40 * dim)  # m_maxIterationsPerRow * size
@@ -71,8 +71,8 @@ assert rs_iter.getMaxIterations() == 40 * dim
 
 T_iter = rs_iter.matrixT()
 U_iter = rs_iter.matrixU()
-assert eigenpy.is_approx(T, T_iter, 1e-12)
-assert eigenpy.is_approx(U, U_iter, 1e-12)
+assert eigenpy.is_approx(T, T_iter)
+assert eigenpy.is_approx(U, U_iter)
 
 if dim > 2:
     rs_few_iter = eigenpy.RealSchur(dim)
@@ -89,8 +89,8 @@ assert result_triangular.info() == eigenpy.ComputationInfo.Success
 T_triangular = rs_triangular.matrixT()
 U_triangular = rs_triangular.matrixU()
 
-assert eigenpy.is_approx(T_triangular, A_triangular, 1e-10)
-assert eigenpy.is_approx(U_triangular, np.eye(dim), 1e-10)
+assert eigenpy.is_approx(T_triangular, A_triangular)
+assert eigenpy.is_approx(U_triangular, np.eye(dim))
 
 hess = eigenpy.HessenbergDecomposition(A)
 H = hess.matrixH()
@@ -103,7 +103,7 @@ assert result_from_hess.info() == eigenpy.ComputationInfo.Success
 T_from_hess = rs_from_hess.matrixT()
 U_from_hess = rs_from_hess.matrixU()
 
-assert eigenpy.is_approx(A, U_from_hess @ T_from_hess @ U_from_hess.T, 1e-10)
+assert eigenpy.is_approx(A, U_from_hess @ T_from_hess @ U_from_hess.T)
 
 rs1_id = eigenpy.RealSchur(dim)
 rs2_id = eigenpy.RealSchur(dim)

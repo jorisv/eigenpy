@@ -13,8 +13,8 @@ U = cs.matrixU()
 T = cs.matrixT()
 
 A_complex = A.astype(complex)
-assert eigenpy.is_approx(A_complex, U @ T @ U.conj().T, 1e-10)
-assert eigenpy.is_approx(U @ U.conj().T, np.eye(dim), 1e-10)
+assert eigenpy.is_approx(A_complex, U @ T @ U.conj().T)
+assert eigenpy.is_approx(U @ U.conj().T, np.eye(dim))
 
 for row in range(1, dim):
     for col in range(row):
@@ -33,20 +33,20 @@ U1 = cs1.matrixU()
 T2 = cs2.matrixT()
 U2 = cs2.matrixU()
 
-assert eigenpy.is_approx(T1, T2, 1e-12)
-assert eigenpy.is_approx(U1, U2, 1e-12)
+assert eigenpy.is_approx(T1, T2)
+assert eigenpy.is_approx(U1, U2)
 
 cs_no_u = eigenpy.ComplexSchur(A, False)
 assert cs_no_u.info() == eigenpy.ComputationInfo.Success
 T_no_u = cs_no_u.matrixT()
 
-assert eigenpy.is_approx(T, T_no_u, 1e-12)
+assert eigenpy.is_approx(T, T_no_u)
 
 cs_compute_no_u = eigenpy.ComplexSchur(dim)
 result_no_u = cs_compute_no_u.compute(A, False)
 assert result_no_u.info() == eigenpy.ComputationInfo.Success
 T_compute_no_u = cs_compute_no_u.matrixT()
-assert eigenpy.is_approx(T, T_compute_no_u, 1e-12)
+assert eigenpy.is_approx(T, T_compute_no_u)
 
 cs_iter = eigenpy.ComplexSchur(dim)
 cs_iter.setMaxIterations(30 * dim)  # m_maxIterationsPerRow * size
@@ -56,8 +56,8 @@ assert cs_iter.getMaxIterations() == 30 * dim
 
 T_iter = cs_iter.matrixT()
 U_iter = cs_iter.matrixU()
-assert eigenpy.is_approx(T, T_iter, 1e-12)
-assert eigenpy.is_approx(U, U_iter, 1e-12)
+assert eigenpy.is_approx(T, T_iter)
+assert eigenpy.is_approx(U, U_iter)
 
 cs_few_iter = eigenpy.ComplexSchur(dim)
 cs_few_iter.setMaxIterations(1)
@@ -74,8 +74,8 @@ T_triangular = cs_triangular.matrixT()
 U_triangular = cs_triangular.matrixU()
 
 A_triangular_complex = A_triangular.astype(complex)
-assert eigenpy.is_approx(T_triangular, A_triangular_complex, 1e-10)
-assert eigenpy.is_approx(U_triangular, np.eye(dim, dtype=complex), 1e-10)
+assert eigenpy.is_approx(T_triangular, A_triangular_complex)
+assert eigenpy.is_approx(U_triangular, np.eye(dim, dtype=complex))
 
 hess = eigenpy.HessenbergDecomposition(A)
 H = hess.matrixH()
@@ -89,9 +89,7 @@ T_from_hess = cs_from_hess.matrixT()
 U_from_hess = cs_from_hess.matrixU()
 
 A_complex = A.astype(complex)
-assert eigenpy.is_approx(
-    A_complex, U_from_hess @ T_from_hess @ U_from_hess.conj().T, 1e-10
-)
+assert eigenpy.is_approx(A_complex, U_from_hess @ T_from_hess @ U_from_hess.conj().T)
 
 cs1_id = eigenpy.ComplexSchur(dim)
 cs2_id = eigenpy.ComplexSchur(dim)

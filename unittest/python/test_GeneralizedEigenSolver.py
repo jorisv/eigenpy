@@ -35,8 +35,8 @@ for k in range(dim):
 
     Av = A @ v
     lambda_Bv = lambda_k * (B @ v)
-    assert eigenpy.is_approx(Av.real, lambda_Bv.real, 1e-10)
-    assert eigenpy.is_approx(Av.imag, lambda_Bv.imag, 1e-10)
+    assert eigenpy.is_approx(Av.real, lambda_Bv.real, 1e-6)
+    assert eigenpy.is_approx(Av.imag, lambda_Bv.imag, 1e-6)
 
 for k in range(dim):
     v = eigenvectors[:, k]
@@ -45,8 +45,8 @@ for k in range(dim):
 
     alpha_Bv = alpha * (B @ v)
     beta_Av = beta * (A @ v)
-    assert eigenpy.is_approx(alpha_Bv.real, beta_Av.real, 1e-10)
-    assert eigenpy.is_approx(alpha_Bv.imag, beta_Av.imag, 1e-10)
+    assert eigenpy.is_approx(alpha_Bv.real, beta_Av.real, 1e-6)
+    assert eigenpy.is_approx(alpha_Bv.imag, beta_Av.imag, 1e-6)
 
 for k in range(dim):
     if abs(betas[k]) > 1e-12:

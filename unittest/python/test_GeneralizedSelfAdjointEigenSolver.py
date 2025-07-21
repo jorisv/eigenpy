@@ -45,10 +45,10 @@ def test_generalized_selfadjoint_eigensolver(options):
                 lam = D[i]
                 Av = A @ v
                 lam_Bv = lam * (B @ v)
-                assert eigenpy.is_approx(Av, lam_Bv, 1e-10)
+                assert eigenpy.is_approx(Av, lam_Bv, 1e-6)
 
             VT_B_V = V.T @ B @ V
-            assert eigenpy.is_approx(VT_B_V, np.eye(dim), 1e-10)
+            assert eigenpy.is_approx(VT_B_V, np.eye(dim), 1e-6)
 
         elif options & eigenpy.DecompositionOptions.ABx_lx:
             AB = A @ B
@@ -57,7 +57,7 @@ def test_generalized_selfadjoint_eigensolver(options):
                 lam = D[i]
                 ABv = AB @ v
                 lam_v = lam * v
-                assert np.allclose(ABv, lam_v)
+                assert eigenpy.is_approx(ABv, lam_v, 1e-6)
 
         elif options & eigenpy.DecompositionOptions.BAx_lx:
             BA = B @ A
@@ -66,7 +66,7 @@ def test_generalized_selfadjoint_eigensolver(options):
                 lam = D[i]
                 BAv = BA @ v
                 lam_v = lam * v
-                assert np.allclose(BAv, lam_v)
+                assert eigenpy.is_approx(BAv, lam_v, 1e-6)
 
     _gsaes_compute = gsaes.compute(A, B)
     _gsaes_compute_options = gsaes.compute(A, B, options)

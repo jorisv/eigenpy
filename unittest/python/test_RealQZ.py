@@ -15,11 +15,11 @@ S = realqz.matrixS()
 Z = realqz.matrixZ()
 T = realqz.matrixT()
 
-assert eigenpy.is_approx(A, Q @ S @ Z, 1e-10)
-assert eigenpy.is_approx(B, Q @ T @ Z, 1e-10)
+assert eigenpy.is_approx(A, Q @ S @ Z)
+assert eigenpy.is_approx(B, Q @ T @ Z)
 
-assert eigenpy.is_approx(Q @ Q.T, np.eye(dim), 1e-10)
-assert eigenpy.is_approx(Z @ Z.T, np.eye(dim), 1e-10)
+assert eigenpy.is_approx(Q @ Q.T, np.eye(dim))
+assert eigenpy.is_approx(Z @ Z.T, np.eye(dim))
 
 for i in range(dim):
     for j in range(i):
@@ -62,8 +62,8 @@ T_with = realqz_with_qz.matrixT()
 S_without = realqz_without_qz.matrixS()
 T_without = realqz_without_qz.matrixT()
 
-assert eigenpy.is_approx(S_with, S_without, 1e-12)
-assert eigenpy.is_approx(T_with, T_without, 1e-12)
+assert eigenpy.is_approx(S_with, S_without)
+assert eigenpy.is_approx(T_with, T_without)
 
 iterations = realqz.iterations()
 assert iterations >= 0
