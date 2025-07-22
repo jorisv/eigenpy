@@ -63,21 +63,21 @@ struct IncompleteLUTVisitor
 
         .def(
             "solve",
-            +[](Solver const& self, const Eigen::Ref<DenseVectorXs const>& b)
+            +[](const Solver& self, const Eigen::Ref<DenseVectorXs const>& b)
                 -> DenseVectorXs { return self.solve(b); },
             bp::arg("b"),
             "Returns the solution x of A x = b using the current decomposition "
             "of A, where b is a right hand side vector.")
         .def(
             "solve",
-            +[](Solver const& self, const Eigen::Ref<DenseMatrixXs const>& B)
+            +[](const Solver& self, const Eigen::Ref<DenseMatrixXs const>& B)
                 -> DenseMatrixXs { return self.solve(B); },
             bp::arg("b"),
             "Returns the solution X of A X = B using the current decomposition "
             "of A where B is a right hand side matrix.")
         .def(
             "solve",
-            +[](Solver const& self, const MatrixType& B) -> MatrixType {
+            +[](const Solver& self, const MatrixType& B) -> MatrixType {
               DenseMatrixXs B_dense = DenseMatrixXs(B);
               DenseMatrixXs X_dense = self.solve(B_dense);
               return MatrixType(X_dense.sparseView());

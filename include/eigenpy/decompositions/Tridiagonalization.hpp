@@ -49,7 +49,8 @@ struct TridiagonalizationVisitor : public boost::python::def_visitor<
             +[](const Solver &c) -> MatrixType { return c.matrixQ(); },
             "Returns the unitary matrix Q in the decomposition.")
         .def(
-            "matrixT", +[](Solver &c) -> MatrixType { return c.matrixT(); },
+            "matrixT",
+            +[](const Solver &c) -> MatrixType { return c.matrixT(); },
             "Returns an expression of the tridiagonal matrix T in the "
             "decomposition.")
 

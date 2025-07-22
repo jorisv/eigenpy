@@ -35,12 +35,16 @@ struct SelfAdjointEigenSolverVisitor
 
         .def(
             "eigenvalues",
-            +[](Solver& c) -> const VectorType& { return c.eigenvalues(); },
+            +[](const Solver& c) -> const VectorType& {
+              return c.eigenvalues();
+            },
             "Returns the eigenvalues of given matrix.",
             bp::return_internal_reference<>())
         .def(
             "eigenvectors",
-            +[](Solver& c) -> const MatrixType& { return c.eigenvectors(); },
+            +[](const Solver& c) -> const MatrixType& {
+              return c.eigenvectors();
+            },
             "Returns the eigenvectors of given matrix.",
             bp::return_internal_reference<>())
 
