@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Docker images `ghcr.io/stack-of-tasks/eigenpy` ([#575](https://github.com/stack-of-tasks/eigenpy/pull/575))
+
 ### Changed
 
 - Change the default branch to `devel` ([#547](https://github.com/stack-of-tasks/eigenpy/pull/547))
