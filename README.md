@@ -79,6 +79,12 @@ and then install **EigenPy** for Python 3.x with:
 brew install eigenpy
 ```
 
+### Docker
+
+```
+docker run --rm -it ghcr.io/stack-of-tasks/eigenpy:devel
+```
+
 ## Build
 
 Build instruction can be found [here](./development/build.md)
