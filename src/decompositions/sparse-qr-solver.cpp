@@ -7,7 +7,15 @@
 namespace eigenpy {
 void exposeSparseQRSolver() {
   using namespace Eigen;
+
   typedef SparseMatrix<double, ColMajor> ColMajorSparseMatrix;
-  SparseQRVisitor<ColMajorSparseMatrix>::expose("SparseQR");
+  typedef COLAMDOrdering<int> Ordering;
+  typedef SparseQR<ColMajorSparseMatrix, Ordering> SparseQRType;
+
+  SparseQRMatrixQTransposeReturnTypeVisitor<SparseQRType>::expose(
+      "SparseQRMatrixQTransposeReturnType");
+  SparseQRMatrixQReturnTypeVisitor<SparseQRType>::expose(
+      "SparseQRMatrixQReturnType");
+  SparseQRVisitor<SparseQRType>::expose("SparseQR");
 }
 }  // namespace eigenpy

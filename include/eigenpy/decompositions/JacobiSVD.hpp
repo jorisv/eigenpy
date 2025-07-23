@@ -52,7 +52,7 @@ struct JacobiSVDVisitor
              "specified by the computationOptions parameter.  ",
              bp::return_self<>())
         .def("rows", &JacobiSVD::rows, bp::arg("self"),
-             "Returns the number of rows. . ")
+             "Returns the number of rows.")
 
         .def(SVDBaseVisitor<JacobiSVD>());
   }

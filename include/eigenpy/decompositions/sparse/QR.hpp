@@ -14,16 +14,108 @@
 
 namespace eigenpy {
 
-template <typename _MatrixType,
-          typename _Ordering =
-              Eigen::COLAMDOrdering<typename _MatrixType::StorageIndex>>
-struct SparseQRVisitor : public boost::python::def_visitor<
-                             SparseQRVisitor<_MatrixType, _Ordering>> {
-  typedef SparseQRVisitor<_MatrixType, _Ordering> Visitor;
-  typedef _MatrixType MatrixType;
-  typedef _Ordering Ordering;
+template <typename SparseQRType>
+struct SparseQRMatrixQTransposeReturnTypeVisitor
+    : public boost::python::def_visitor<
+          SparseQRMatrixQTransposeReturnTypeVisitor<SparseQRType>> {
+  typedef typename SparseQRType::Scalar Scalar;
+  typedef Eigen::SparseQRMatrixQTransposeReturnType<SparseQRType>
+      QTransposeType;
+  typedef Eigen::VectorXd VectorXd;
+  typedef Eigen::MatrixXd MatrixXd;
 
-  typedef Eigen::SparseQR<MatrixType, Ordering> Solver;
+  template <class PyClass>
+  void visit(PyClass& cl) const {
+    cl.def(bp::init<const SparseQRType&>(bp::args("self", "qr")))
+        .def(
+            "__matmul__",
+            +[](QTransposeType& self, const MatrixXd& other) -> MatrixXd {
+              return MatrixXd(self * other);
+            },
+            bp::args("self", "other"))
+
+        .def(
+            "__matmul__",
+            +[](QTransposeType& self, const VectorXd& other) -> VectorXd {
+              return VectorXd(self * other);
+            },
+            bp::args("self", "other"));
+  }
+
+  static void expose() {
+    static const std::string classname = "SparseQRMatrixQTransposeReturnType_" +
+                                         scalar_name<Scalar>::shortname();
+    expose(classname);
+  }
+
+  static void expose(const std::string& name) {
+    bp::class_<QTransposeType>(
+        name.c_str(), "Eigen SparseQRMatrixQTransposeReturnType", bp::no_init)
+        .def(SparseQRMatrixQTransposeReturnTypeVisitor())
+        .def(IdVisitor<QTransposeType>());
+  }
+};
+
+template <typename SparseQRType>
+struct SparseQRMatrixQReturnTypeVisitor
+    : public boost::python::def_visitor<
+          SparseQRMatrixQReturnTypeVisitor<SparseQRType>> {
+  typedef typename SparseQRType::Scalar Scalar;
+  typedef Eigen::SparseQRMatrixQTransposeReturnType<SparseQRType>
+      QTransposeType;
+  typedef Eigen::SparseQRMatrixQReturnType<SparseQRType> QType;
+  typedef Eigen::VectorXd VectorXd;
+  typedef Eigen::MatrixXd MatrixXd;
+
+  template <class PyClass>
+  void visit(PyClass& cl) const {
+    cl.def(bp::init<const SparseQRType&>(bp::args("self", "qr")))
+        .def(
+            "__matmul__",
+            +[](QType& self, const MatrixXd& other) -> MatrixXd {
+              return MatrixXd(self * other);
+            },
+            bp::args("self", "other"))
+
+        .def(
+            "__matmul__",
+            +[](QType& self, const VectorXd& other) -> VectorXd {
+              return VectorXd(self * other);
+            },
+            bp::args("self", "other"))
+
+        .def("rows", &QType::rows)
+        .def("cols", &QType::cols)
+
+        .def(
+            "adjoint",
+            +[](const QType& self) -> QTransposeType { return self.adjoint(); })
+
+        .def(
+            "transpose", +[](const QType& self) -> QTransposeType {
+              return self.transpose();
+            });
+  }
+
+  static void expose() {
+    static const std::string classname =
+        "SparseQRMatrixQReturnType_" + scalar_name<Scalar>::shortname();
+    expose(classname);
+  }
+
+  static void expose(const std::string& name) {
+    bp::class_<QType>(name.c_str(), "Eigen SparseQRMatrixQReturnType",
+                      bp::no_init)
+        .def(SparseQRMatrixQReturnTypeVisitor())
+        .def(IdVisitor<QType>());
+  }
+};
+
+template <typename SparseQRType>
+struct SparseQRVisitor
+    : public boost::python::def_visitor<SparseQRVisitor<SparseQRType>> {
+  typedef typename SparseQRType::MatrixType MatrixType;
+
   typedef typename MatrixType::Scalar Scalar;
   typedef typename MatrixType::RealScalar RealScalar;
   typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1, MatrixType::Options>
@@ -32,53 +124,70 @@ struct SparseQRVisitor : public boost::python::def_visitor<
                         MatrixType::Options>
       DenseMatrixXs;
 
-  typedef Eigen::SparseQRMatrixQReturnType<Solver> MatrixQType;
+  typedef typename SparseQRType::QRMatrixType QRMatrixType;
+  typedef Eigen::SparseQRMatrixQReturnType<SparseQRType> QType;
 
   template <class PyClass>
-  void visit(PyClass &cl) const {
+  void visit(PyClass& cl) const {
     cl.def(bp::init<>(bp::arg("self"), "Default constructor"))
         .def(bp::init<MatrixType>(
             bp::args("self", "mat"),
             "Construct a QR factorization of the matrix mat."))
 
-        .def("cols", &Solver::cols, bp::arg("self"),
+        .def("cols", &SparseQRType::cols, bp::arg("self"),
              "Returns the number of columns of the represented matrix. ")
-        .def("rows", &Solver::rows, bp::arg("self"),
+        .def("rows", &SparseQRType::rows, bp::arg("self"),
              "Returns the number of rows of the represented matrix. ")
 
-        .def("compute", &Solver::compute, bp::args("self", "matrix"),
+        .def("compute", &SparseQRType::compute, bp::args("self", "matrix"),
              "Compute the symbolic and numeric factorization of the input "
              "sparse matrix. "
              "The input matrix should be in column-major storage. ")
-        .def("analyzePattern", &Solver::analyzePattern, bp::args("self", "mat"),
+        .def("analyzePattern", &SparseQRType::analyzePattern,
+             bp::args("self", "mat"),
              "Compute the column permutation to minimize the fill-in.")
-        .def("factorize", &Solver::factorize, bp::args("self", "matrix"),
+        .def("factorize", &SparseQRType::factorize, bp::args("self", "matrix"),
              "Performs a numeric decomposition of a given matrix.\n"
              "The given matrix must has the same sparcity than the matrix on "
              "which the symbolic decomposition has been performed.")
 
-        .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
+        .def("colsPermutation", &SparseQRType::colsPermutation, bp::arg("self"),
              "Returns a reference to the column matrix permutation PTc such "
              "that Pr A PTc = LU.",
              bp::return_value_policy<bp::copy_const_reference>())
 
-        .def("info", &Solver::info, bp::arg("self"),
+        .def("info", &SparseQRType::info, bp::arg("self"),
              "NumericalIssue if the input contains INF or NaN values or "
              "overflow occured. Returns Success otherwise.")
-        .def("lastErrorMessage", &Solver::lastErrorMessage, bp::arg("self"),
-             "Returns a string describing the type of error. ")
+        .def("lastErrorMessage", &SparseQRType::lastErrorMessage,
+             bp::arg("self"), "Returns a string describing the type of error. ")
 
-        .def("rank", &Solver::rank, bp::arg("self"),
+        .def("rank", &SparseQRType::rank, bp::arg("self"),
              "Returns the number of non linearly dependent columns as "
              "determined "
              "by the pivoting threshold. ")
 
-        .def("setPivotThreshold", &Solver::setPivotThreshold,
+        .def(
+            "matrixQ",
+            +[](const SparseQRType& self) -> QType { return self.matrixQ(); },
+            "Returns an expression of the matrix Q as products of sparse "
+            "Householder reflectors.")
+        .def(
+            "matrixR",
+            +[](const SparseQRType& self) -> const QRMatrixType& {
+              return self.matrixR();
+            },
+            "Returns a const reference to the \b sparse upper triangular "
+            "matrix "
+            "R of the QR factorization.",
+            bp::return_value_policy<bp::copy_const_reference>())
+
+        .def("setPivotThreshold", &SparseQRType::setPivotThreshold,
              bp::args("self", "thresh"),
              "Set the threshold used for a diagonal entry to be an acceptable "
              "pivot.")
 
-        .def(SparseSolverBaseVisitor<Solver>());
+        .def(SparseSolverBaseVisitor<SparseQRType>());
   }
 
   static void expose() {
@@ -87,8 +196,8 @@ struct SparseQRVisitor : public boost::python::def_visitor<
     expose(classname);
   }
 
-  static void expose(const std::string &name) {
-    bp::class_<Solver, boost::noncopyable>(
+  static void expose(const std::string& name) {
+    bp::class_<SparseQRType, boost::noncopyable>(
         name.c_str(),
         "Sparse left-looking QR factorization with numerical column pivoting. "
         "This class implements a left-looking QR decomposition of sparse "
@@ -108,7 +217,7 @@ struct SparseQRVisitor : public boost::python::def_visitor<
         "when A is rank-deficient. \n\n",
         bp::no_init)
         .def(SparseQRVisitor())
-        .def(IdVisitor<Solver>());
+        .def(IdVisitor<SparseQRType>());
   }
 };
 
