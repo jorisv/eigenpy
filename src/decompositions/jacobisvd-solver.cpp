@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 INRIA
+ * Copyright 2025 INRIA
  */
 
 #include "eigenpy/decompositions/JacobiSVD.hpp"

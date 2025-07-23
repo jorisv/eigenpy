@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 INRIA
+ * Copyright 2025 INRIA
  */
 
 #ifndef __eigenpy_decompositions_hessenberg_decomposition_hpp__

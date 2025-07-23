@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 CNRS
+ * Copyright 2025 INRIA
  */
 
 #ifndef __eigenpy_bicgstab_hpp__

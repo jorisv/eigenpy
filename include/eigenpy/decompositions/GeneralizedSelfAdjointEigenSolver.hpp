@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 INRIA
+ * Copyright 2025 INRIA
  */
 
 #ifndef __eigenpy_decompositions_generalized_self_adjoint_eigen_solver_hpp__

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2024 INRIA
+ * Copyright 2025 INRIA
  */
 
 #ifndef __eigenpy_decompositions_svdbase_hpp__

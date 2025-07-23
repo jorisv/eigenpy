@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 INRIA
+ * Copyright 2025 INRIA
  */
 
 #ifndef __eigenpy_decompositions_sparse_incomplete_cholesky_hpp__
