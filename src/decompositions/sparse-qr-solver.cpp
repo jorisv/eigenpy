@@ -2,7 +2,7 @@
  * Copyright 2025 INRIA
  */
 
-#include "eigenpy/decompositions/sparse/QR.hpp"
+#include "eigenpy/decompositions/sparse/SparseQR.hpp"
 
 namespace eigenpy {
 void exposeSparseQRSolver() {

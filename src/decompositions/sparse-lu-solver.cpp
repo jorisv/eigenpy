@@ -2,7 +2,7 @@
  * Copyright 2025 INRIA
  */
 
-#include "eigenpy/decompositions/sparse/LU.hpp"
+#include "eigenpy/decompositions/sparse/SparseLU.hpp"
 
 namespace eigenpy {
 void exposeSparseLUSolver() {
