@@ -14,6 +14,76 @@
 
 namespace eigenpy {
 
+template <typename MappedSupernodalType>
+struct SparseLUMatrixLReturnTypeVisitor
+    : public boost::python::def_visitor<
+          SparseLUMatrixLReturnTypeVisitor<MappedSupernodalType>> {
+  typedef Eigen::SparseLUMatrixLReturnType<MappedSupernodalType> LType;
+  typedef typename MappedSupernodalType::Scalar Scalar;
+  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1, Eigen::ColMajor> VectorXs;
+  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>
+      MatrixXs;
+
+  template <typename MatrixOrVector>
+  static void solveInPlace(const LType &self,
+                           Eigen::Ref<MatrixOrVector> mat_vec) {
+    self.solveInPlace(mat_vec);
+  }
+
+  template <class PyClass>
+  void visit(PyClass &cl) const {
+    cl.def(bp::init<MappedSupernodalType>(bp::args("self", "mapL")))
+
+        .def("rows", &LType::rows)
+        .def("cols", &LType::cols)
+
+        .def("solveInPlace", &solveInPlace<MatrixXs>, bp::args("self", "X"))
+        .def("solveInPlace", &solveInPlace<VectorXs>, bp::args("self", "x"));
+  }
+
+  static void expose(const std::string &name) {
+    bp::class_<LType>(name.c_str(), "Eigen SparseLUMatrixLReturnType",
+                      bp::no_init)
+        .def(SparseLUMatrixLReturnTypeVisitor())
+        .def(IdVisitor<LType>());
+  }
+};
+
+template <typename MatrixLType, typename MatrixUType>
+struct SparseLUMatrixUReturnTypeVisitor
+    : public boost::python::def_visitor<
+          SparseLUMatrixUReturnTypeVisitor<MatrixLType, MatrixUType>> {
+  typedef Eigen::SparseLUMatrixUReturnType<MatrixLType, MatrixUType> UType;
+  typedef typename MatrixLType::Scalar Scalar;
+  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1, Eigen::ColMajor> VectorXs;
+  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>
+      MatrixXs;
+
+  template <typename MatrixOrVector>
+  static void solveInPlace(const UType &self,
+                           Eigen::Ref<MatrixOrVector> mat_vec) {
+    self.solveInPlace(mat_vec);
+  }
+
+  template <class PyClass>
+  void visit(PyClass &cl) const {
+    cl.def(bp::init<MatrixLType, MatrixUType>(bp::args("self", "mapL", "mapU")))
+
+        .def("rows", &UType::rows)
+        .def("cols", &UType::cols)
+
+        .def("solveInPlace", &solveInPlace<MatrixXs>, bp::args("self", "X"))
+        .def("solveInPlace", &solveInPlace<VectorXs>, bp::args("self", "x"));
+  }
+
+  static void expose(const std::string &name) {
+    bp::class_<UType>(name.c_str(), "Eigen SparseLUMatrixUReturnType",
+                      bp::no_init)
+        .def(SparseLUMatrixUReturnTypeVisitor())
+        .def(IdVisitor<UType>());
+  }
+};
+
 template <typename _MatrixType,
           typename _Ordering =
               Eigen::COLAMDOrdering<typename _MatrixType::StorageIndex>>
@@ -25,11 +95,13 @@ struct SparseLUVisitor : public boost::python::def_visitor<
   typedef Eigen::SparseLU<MatrixType> Solver;
   typedef typename MatrixType::Scalar Scalar;
   typedef typename MatrixType::RealScalar RealScalar;
-  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, 1, MatrixType::Options>
-      DenseVectorXs;
-  typedef Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic,
-                        MatrixType::Options>
-      DenseMatrixXs;
+
+  typedef typename Solver::SCMatrix SCMatrix;
+  typedef typename MatrixType::StorageIndex StorageIndex;
+  typedef Eigen::MappedSparseMatrix<Scalar, Eigen::ColMajor, StorageIndex>
+      MappedSparseMatrix;
+  typedef Eigen::SparseLUMatrixLReturnType<SCMatrix> LType;
+  typedef Eigen::SparseLUMatrixUReturnType<SCMatrix, MappedSparseMatrix> UType;
 
   template <class PyClass>
   void visit(PyClass &cl) const {
@@ -57,7 +129,16 @@ struct SparseLUVisitor : public boost::python::def_visitor<
         .def("nnzL", &Solver::nnzL, bp::arg("self"),
              "The number of non zero elements in L")
         .def("nnzU", &Solver::nnzU, bp::arg("self"),
-             "The number of non zero elements in L")
+             "The number of non zero elements in U")
+
+        .def(
+            "matrixL",
+            +[](const Solver &self) -> LType { return self.matrixL(); },
+            "Returns an expression of the matrix L.")
+        .def(
+            "matrixU",
+            +[](const Solver &self) -> UType { return self.matrixU(); },
+            "Returns an expression of the matrix U.")
 
         .def("colsPermutation", &Solver::colsPermutation, bp::arg("self"),
              "Returns a reference to the column matrix permutation PTc such "

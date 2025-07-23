@@ -9,7 +9,8 @@ void exposeSparseQRSolver() {
   using namespace Eigen;
 
   typedef SparseMatrix<double, ColMajor> ColMajorSparseMatrix;
-  typedef COLAMDOrdering<int> Ordering;
+  typedef typename ColMajorSparseMatrix::StorageIndex StorageIndex;
+  typedef COLAMDOrdering<StorageIndex> Ordering;
   typedef SparseQR<ColMajorSparseMatrix, Ordering> SparseQRType;
 
   SparseQRMatrixQTransposeReturnTypeVisitor<SparseQRType>::expose(
