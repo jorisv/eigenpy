@@ -3,6 +3,7 @@
  */
 
 #include "eigenpy/decompositions/decompositions.hpp"
+#include "eigenpy/solvers/MINRES.hpp"
 
 #include "eigenpy/fwd.hpp"
 
@@ -30,6 +31,11 @@ void exposeSparseQRSolver();
 void exposePermutationMatrix();
 void exposeBDCSVDSolver();
 void exposeJacobiSVDSolver();
+
+void exposeBackwardCompatibilityAliases() {
+  typedef Eigen::MatrixXd MatrixXd;
+  MINRESSolverVisitor<MatrixXd>::expose("MINRES");
+}
 
 void exposeDecompositions() {
   using namespace Eigen;
@@ -80,5 +86,7 @@ void exposeDecompositions() {
 #ifdef EIGENPY_WITH_ACCELERATE_SUPPORT
   exposeAccelerate();
 #endif
+
+  exposeBackwardCompatibilityAliases();
 }
 }  // namespace eigenpy
