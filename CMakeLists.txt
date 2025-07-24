@@ -209,7 +209,8 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_CHOLMOD_HEADERS
     include/eigenpy/decompositions/sparse/cholmod/CholmodSupernodalLLT.hpp)
 
 set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_ACCELERATE_HEADERS
-    include/eigenpy/decompositions/sparse/accelerate/Accelerate.hpp)
+    include/eigenpy/decompositions/sparse/accelerate/Accelerate.hpp
+    include/eigenpy/decompositions/sparse/accelerate/accelerate.hpp)
 
 set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
     include/eigenpy/decompositions/sparse/SimplicialLLT.hpp
@@ -217,7 +218,9 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
     include/eigenpy/decompositions/sparse/SparseLU.hpp
     include/eigenpy/decompositions/sparse/SparseQR.hpp
     include/eigenpy/decompositions/sparse/SimplicialCholesky.hpp
-    include/eigenpy/decompositions/sparse/SparseSolverBase.hpp)
+    include/eigenpy/decompositions/sparse/SparseSolverBase.hpp
+    include/eigenpy/decompositions/sparse/LDLT.hpp
+    include/eigenpy/decompositions/sparse/LLT.hpp)
 
 if(BUILD_WITH_CHOLMOD_SUPPORT)
   list(APPEND ${PROJECT_NAME}_DECOMPOSITIONS_SPARSE_HEADERS
@@ -254,7 +257,8 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_HEADERS
     include/eigenpy/decompositions/SelfAdjointEigenSolver.hpp
     include/eigenpy/decompositions/SVDBase.hpp
     include/eigenpy/decompositions/BDCSVD.hpp
-    include/eigenpy/decompositions/JacobiSVD.hpp)
+    include/eigenpy/decompositions/JacobiSVD.hpp
+    include/eigenpy/decompositions/minres.hpp)
 
 set(${PROJECT_NAME}_HEADERS
     ${${PROJECT_NAME}_UTILS_HEADERS}
