@@ -2,8 +2,8 @@
  * Copyright 2017-2018 CNRS
  */
 
-#ifndef __eigenpy_least_square_conjugate_gradient_hpp__
-#define __eigenpy_least_square_conjugate_gradient_hpp__
+#ifndef __eigenpy_solvers_least_square_conjugate_gradient_hpp__
+#define __eigenpy_solvers_least_square_conjugate_gradient_hpp__
 
 #include <Eigen/IterativeLinearSolvers>
 
@@ -42,4 +42,4 @@ struct LeastSquaresConjugateGradientVisitor
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_least_square_conjugate_gradient_hpp__
+#endif  // ifndef __eigenpy_solvers_least_square_conjugate_gradient_hpp__

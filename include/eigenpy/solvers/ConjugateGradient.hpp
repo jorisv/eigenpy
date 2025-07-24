@@ -2,8 +2,8 @@
  * Copyright 2017 CNRS
  */
 
-#ifndef __eigenpy_conjugate_gradient_hpp__
-#define __eigenpy_conjugate_gradient_hpp__
+#ifndef __eigenpy_solvers_conjugate_gradient_hpp__
+#define __eigenpy_solvers_conjugate_gradient_hpp__
 
 #include <Eigen/IterativeLinearSolvers>
 
@@ -38,4 +38,4 @@ struct ConjugateGradientVisitor
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_conjugate_gradient_hpp__
+#endif  // ifndef __eigenpy_solvers_conjugate_gradient_hpp__

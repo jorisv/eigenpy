@@ -2,8 +2,8 @@
  * Copyright 2025 INRIA
  */
 
-#ifndef __eigenpy_bicgstab_hpp__
-#define __eigenpy_bicgstab_hpp__
+#ifndef __eigenpy_solvers_bicgstab_hpp__
+#define __eigenpy_solvers_bicgstab_hpp__
 
 #include <Eigen/IterativeLinearSolvers>
 
@@ -38,4 +38,4 @@ struct BiCGSTABVisitor
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_bicgstab_hpp__
+#endif  // ifndef __eigenpy_solvers_bicgstab_hpp__

@@ -2,8 +2,8 @@
  * Copyright 2025 INRIA
  */
 
-#ifndef __eigenpy_decompositions_sparse_incomplete_cholesky_hpp__
-#define __eigenpy_decompositions_sparse_incomplete_cholesky_hpp__
+#ifndef __eigenpy_solvers_incomplete_cholesky_hpp__
+#define __eigenpy_solvers_incomplete_cholesky_hpp__
 
 #include "eigenpy/eigenpy.hpp"
 #include "eigenpy/utils/scalar-name.hpp"
@@ -122,4 +122,4 @@ struct IncompleteCholeskyVisitor : public boost::python::def_visitor<
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_decompositions_sparse_incomplete_cholesky_hpp__
+#endif  // ifndef __eigenpy_solvers_incomplete_cholesky_hpp__

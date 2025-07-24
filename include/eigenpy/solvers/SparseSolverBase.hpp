@@ -2,8 +2,8 @@
  * Copyright 2017 CNRS
  */
 
-#ifndef __eigenpy_sparse_solver_base_hpp__
-#define __eigenpy_sparse_solver_base_hpp__
+#ifndef __eigenpy_solvers_sparse_solver_base_hpp__
+#define __eigenpy_solvers_sparse_solver_base_hpp__
 
 #include "eigenpy/fwd.hpp"
 
@@ -29,4 +29,4 @@ struct SparseSolverVisitor
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_sparse_solver_base_hpp__
+#endif  // ifndef __eigenpy_solvers_sparse_solver_base_hpp__

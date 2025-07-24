@@ -3,8 +3,8 @@
  * Copyright 2024 Inria
  */
 
-#ifndef __eigenpy_bfgs_preconditioners_hpp__
-#define __eigenpy_bfgs_preconditioners_hpp__
+#ifndef __eigenpy_solvers_bfgs_preconditioners_hpp__
+#define __eigenpy_solvers_bfgs_preconditioners_hpp__
 
 #include <Eigen/IterativeLinearSolvers>
 
@@ -65,4 +65,4 @@ struct LimitedBFGSPreconditionerBaseVisitor
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_bfgs_preconditioners_hpp__
+#endif  // ifndef __eigenpy_solvers_bfgs_preconditioners_hpp__

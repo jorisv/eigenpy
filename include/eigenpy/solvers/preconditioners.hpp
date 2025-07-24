@@ -2,8 +2,8 @@
  * Copyright 2017 CNRS
  */
 
-#ifndef __eigenpy_preconditioners_hpp__
-#define __eigenpy_preconditioners_hpp__
+#ifndef __eigenpy_solvers_preconditioners_hpp__
+#define __eigenpy_solvers_preconditioners_hpp__
 
 #include "eigenpy/config.hpp"
 
@@ -13,4 +13,4 @@ void EIGENPY_DLLAPI exposePreconditioners();
 
 }  // namespace eigenpy
 
-#endif  // define __eigenpy_preconditioners_hpp__
+#endif  // define __eigenpy_solvers_preconditioners_hpp__

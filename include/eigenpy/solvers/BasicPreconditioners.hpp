@@ -3,8 +3,8 @@
  * Copyright 2024 Inria
  */
 
-#ifndef __eigenpy_basic_preconditioners_hpp__
-#define __eigenpy_basic_preconditioners_hpp__
+#ifndef __eigenpy_solvers_basic_preconditioners_hpp__
+#define __eigenpy_solvers_basic_preconditioners_hpp__
 
 #include <Eigen/IterativeLinearSolvers>
 
@@ -115,4 +115,4 @@ struct IdentityPreconditionerVisitor
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_basic_preconditioners_hpp__
+#endif  // ifndef __eigenpy_solvers_basic_preconditioners_hpp__

@@ -2,8 +2,8 @@
  * Copyright 2017 CNRS
  */
 
-#ifndef __eigenpy_iterative_solver_base_hpp__
-#define __eigenpy_iterative_solver_base_hpp__
+#ifndef __eigenpy_solvers_iterative_solver_base_hpp__
+#define __eigenpy_solvers_iterative_solver_base_hpp__
 
 #include "eigenpy/fwd.hpp"
 #include "eigenpy/solvers/SparseSolverBase.hpp"
@@ -103,4 +103,4 @@ struct IterativeSolverVisitor : public boost::python::def_visitor<
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_iterative_solver_base_hpp__
+#endif  // ifndef __eigenpy_solvers_iterative_solver_base_hpp__

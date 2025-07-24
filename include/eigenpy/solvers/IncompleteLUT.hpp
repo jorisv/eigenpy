@@ -2,8 +2,8 @@
  * Copyright 2025 INRIA
  */
 
-#ifndef __eigenpy_decompositions_sparse_incomplete_lut_hpp__
-#define __eigenpy_decompositions_sparse_incomplete_lut_hpp__
+#ifndef __eigenpy_solvers_incomplete_lut_hpp__
+#define __eigenpy_solvers_incomplete_lut_hpp__
 
 #include "eigenpy/eigenpy.hpp"
 #include "eigenpy/utils/scalar-name.hpp"
@@ -105,4 +105,4 @@ struct IncompleteLUTVisitor
 
 }  // namespace eigenpy
 
-#endif  // ifndef __eigenpy_decompositions_sparse_incomplete_lut_hpp__
+#endif  // ifndef __eigenpy_solvers_incomplete_lut_hpp__
