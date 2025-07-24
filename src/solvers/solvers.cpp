@@ -46,7 +46,6 @@ void exposeSolvers() {
   ConjugateGradientVisitor<IdentityConjugateGradient>::expose(
       "IdentityConjugateGradient");
 
-#if EIGEN_VERSION_AT_LEAST(3, 3, 5)
   LeastSquaresConjugateGradientVisitor<LeastSquaresConjugateGradient<
       MatrixXd, LeastSquareDiagonalPreconditioner<MatrixXd::Scalar>>>::
       expose("LeastSquaresConjugateGradient");
@@ -54,7 +53,6 @@ void exposeSolvers() {
       expose("IdentityLeastSquaresConjugateGradient");
   LeastSquaresConjugateGradientVisitor<DiagonalLeastSquaresConjugateGradient>::
       expose("DiagonalLeastSquaresConjugateGradient");
-#endif
 
   BiCGSTABVisitor<BiCGSTAB<MatrixXd>>::expose("BiCGSTAB");
   BiCGSTABVisitor<IdentityBiCGSTAB>::expose("IdentityBiCGSTAB");

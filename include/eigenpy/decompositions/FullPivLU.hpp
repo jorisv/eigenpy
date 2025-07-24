@@ -96,11 +96,9 @@ struct FullPivLUSolverVisitor
 
         .def("rank", &Solver::rank, bp::arg("self"))
 
-#if EIGEN_VERSION_AT_LEAST(3, 3, 0)
         .def("rcond", &Solver::rcond, bp::arg("self"),
              "Returns an estimate of the reciprocal condition number of the "
              "matrix.")
-#endif
         .def("reconstructedMatrix", &Solver::reconstructedMatrix,
              bp::arg("self"),
              "Returns the matrix represented by the decomposition, i.e., it "
