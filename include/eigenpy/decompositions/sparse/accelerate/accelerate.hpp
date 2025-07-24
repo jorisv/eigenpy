@@ -13,4 +13,6 @@ EIGENPY_PRAGMA_DEPRECATED_HEADER(eigenpy/decompositions/sparse/accelerate/accele
 
 #include "eigenpy/decompositions/sparse/accelerate/Accelerate.hpp"
 
-#endif  // ifndef __eigenpy_decompositions_sparse_accelerate_accelerate_hpp_deprecated__
+#endif
+
+// ifndef __eigenpy_decompositions_sparse_accelerate_accelerate_hpp_deprecated__
