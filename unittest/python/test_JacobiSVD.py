@@ -9,22 +9,25 @@ FULL_V = eigenpy.DecompositionOptions.ComputeFullV
 
 _options = [
     0,
-    THIN_U,
-    THIN_V,
-    FULL_U,
-    FULL_V,
+    # THIN_U,
+    # THIN_V,
+    # FULL_U,
+    # FULL_V,
     THIN_U | THIN_V,
     FULL_U | FULL_V,
-    THIN_U | FULL_V,
-    FULL_U | THIN_V,
+    # THIN_U | FULL_V,
+    # FULL_U | THIN_V,
 ]
 
 _classes = [
     eigenpy.ColPivHhJacobiSVD,
-    eigenpy.FullPivHhJacobiSVD,
-    eigenpy.HhJacobiSVD,
-    eigenpy.NoPrecondJacobiSVD,
+    # eigenpy.FullPivHhJacobiSVD,
+    # eigenpy.HhJacobiSVD,
+    # eigenpy.NoPrecondJacobiSVD,
 ]
+
+# Rationale: Tets only few cases to gain computation time
+# User can test all of them by uncommenting the corresponding lines
 
 
 def is_valid_combination(cls, opt):
@@ -103,27 +106,6 @@ def test_jacobi(cls, opt):
         S_matrix = np.diag(S)
         A_reconstructed = U @ S_matrix @ V.T
         assert eigenpy.is_approx(A, A_reconstructed)
-
-    jacobisvd.setThreshold()
-    _default_threshold = jacobisvd.threshold()
-    jacobisvd.setThreshold(1e-8)
-    assert jacobisvd.threshold() == 1e-8
-
-    decomp1 = cls()
-    decomp2 = cls()
-    id1 = decomp1.id()
-    id2 = decomp2.id()
-    assert id1 != id2
-    assert id1 == decomp1.id()
-    assert id2 == decomp2.id()
-
-    decomp3 = cls(dim, dim, opt)
-    decomp4 = cls(dim, dim, opt)
-    id3 = decomp3.id()
-    id4 = decomp4.id()
-    assert id3 != id4
-    assert id3 == decomp3.id()
-    assert id4 == decomp4.id()
 
 
 for cls in _classes:

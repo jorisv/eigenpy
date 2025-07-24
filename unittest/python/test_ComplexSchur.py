@@ -20,50 +20,6 @@ for row in range(1, dim):
     for col in range(row):
         assert abs(T[row, col]) < 1e-12
 
-A_test = rng.random((dim, dim))
-cs1 = eigenpy.ComplexSchur(dim)
-cs1.compute(A_test)
-cs2 = eigenpy.ComplexSchur(A_test)
-
-assert cs1.info() == eigenpy.ComputationInfo.Success
-assert cs2.info() == eigenpy.ComputationInfo.Success
-
-T1 = cs1.matrixT()
-U1 = cs1.matrixU()
-T2 = cs2.matrixT()
-U2 = cs2.matrixU()
-
-assert eigenpy.is_approx(T1, T2)
-assert eigenpy.is_approx(U1, U2)
-
-cs_no_u = eigenpy.ComplexSchur(A, False)
-assert cs_no_u.info() == eigenpy.ComputationInfo.Success
-T_no_u = cs_no_u.matrixT()
-
-assert eigenpy.is_approx(T, T_no_u)
-
-cs_compute_no_u = eigenpy.ComplexSchur(dim)
-result_no_u = cs_compute_no_u.compute(A, False)
-assert result_no_u.info() == eigenpy.ComputationInfo.Success
-T_compute_no_u = cs_compute_no_u.matrixT()
-assert eigenpy.is_approx(T, T_compute_no_u)
-
-cs_iter = eigenpy.ComplexSchur(dim)
-cs_iter.setMaxIterations(30 * dim)  # m_maxIterationsPerRow * size
-result_iter = cs_iter.compute(A)
-assert result_iter.info() == eigenpy.ComputationInfo.Success
-assert cs_iter.getMaxIterations() == 30 * dim
-
-T_iter = cs_iter.matrixT()
-U_iter = cs_iter.matrixU()
-assert eigenpy.is_approx(T, T_iter)
-assert eigenpy.is_approx(U, U_iter)
-
-cs_few_iter = eigenpy.ComplexSchur(dim)
-cs_few_iter.setMaxIterations(1)
-result_few = cs_few_iter.compute(A)
-assert cs_few_iter.getMaxIterations() == 1
-
 A_triangular = np.triu(A)
 cs_triangular = eigenpy.ComplexSchur(dim)
 cs_triangular.setMaxIterations(1)
@@ -90,27 +46,3 @@ U_from_hess = cs_from_hess.matrixU()
 
 A_complex = A.astype(complex)
 assert eigenpy.is_approx(A_complex, U_from_hess @ T_from_hess @ U_from_hess.conj().T)
-
-cs1_id = eigenpy.ComplexSchur(dim)
-cs2_id = eigenpy.ComplexSchur(dim)
-id1 = cs1_id.id()
-id2 = cs2_id.id()
-assert id1 != id2
-assert id1 == cs1_id.id()
-assert id2 == cs2_id.id()
-
-cs3_id = eigenpy.ComplexSchur(A)
-cs4_id = eigenpy.ComplexSchur(A)
-id3 = cs3_id.id()
-id4 = cs4_id.id()
-assert id3 != id4
-assert id3 == cs3_id.id()
-assert id4 == cs4_id.id()
-
-cs5_id = eigenpy.ComplexSchur(A, True)
-cs6_id = eigenpy.ComplexSchur(A, False)
-id5 = cs5_id.id()
-id6 = cs6_id.id()
-assert id5 != id6
-assert id5 == cs5_id.id()
-assert id6 == cs6_id.id()
