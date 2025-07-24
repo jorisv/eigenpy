@@ -241,6 +241,8 @@ set(${PROJECT_NAME}_DECOMPOSITIONS_HEADERS
     include/eigenpy/decompositions/RealSchur.hpp
     include/eigenpy/decompositions/ComplexEigenSolver.hpp
     include/eigenpy/decompositions/ComplexSchur.hpp
+    include/eigenpy/decompositions/FullPivLU.hpp
+    include/eigenpy/decompositions/PartialPivLU.hpp
     include/eigenpy/decompositions/PermutationMatrix.hpp
     include/eigenpy/decompositions/LDLT.hpp
     include/eigenpy/decompositions/LLT.hpp
