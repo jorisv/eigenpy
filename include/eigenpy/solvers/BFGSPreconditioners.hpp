@@ -1,6 +1,6 @@
 /*
  * Copyright 2017 CNRS
- * Copyright 2024 Inria
+ * Copyright 2024-2025 INRIA
  */
 
 #ifndef __eigenpy_solvers_bfgs_preconditioners_hpp__

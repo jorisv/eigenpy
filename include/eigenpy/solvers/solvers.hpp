@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 CNRS INRIA
+ * Copyright 2017-2025 CNRS INRIA
  */
 
 #ifndef __eigenpy_solvers_solvers_hpp__

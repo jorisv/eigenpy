@@ -1,5 +1,6 @@
 /*
  * Copyright 2017-2018 CNRS
+ * Copyright 2025 INRIA
  */
 
 #ifndef __eigenpy_solvers_least_square_conjugate_gradient_hpp__

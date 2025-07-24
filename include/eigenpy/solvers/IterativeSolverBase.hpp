@@ -1,5 +1,6 @@
 /*
  * Copyright 2017 CNRS
+ * Copyright 2025 INRIA
  */
 
 #ifndef __eigenpy_solvers_iterative_solver_base_hpp__

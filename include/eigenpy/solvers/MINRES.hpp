@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 INRIA
+ * Copyright 2021-2025 INRIA
  */
 
 #ifndef __eigenpy_solvers_minres_hpp__
