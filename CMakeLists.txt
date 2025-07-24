@@ -318,8 +318,15 @@ list(
 # ----------------------------------------------------
 # --- TARGETS ----------------------------------------
 # ----------------------------------------------------
-set(${PROJECT_NAME}_SOLVERS_SOURCES src/solvers/preconditioners.cpp
-                                    src/solvers/solvers.cpp)
+set(${PROJECT_NAME}_SOLVERS_SOURCES
+    src/solvers/preconditioners.cpp
+    src/solvers/solvers.cpp
+    src/solvers/minres.cpp
+    src/solvers/bicgstab.cpp
+    src/solvers/conjugate-gradient.cpp
+    src/solvers/least-squares-conjugate-gradient.cpp
+    src/solvers/incomplete-cholesky.cpp
+    src/solvers/incomplete-lut.cpp)
 
 set(${PROJECT_NAME}_DECOMPOSITIONS_SOURCES
     src/decompositions/decompositions.cpp
