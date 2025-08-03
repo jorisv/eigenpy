@@ -98,7 +98,7 @@ The following people have been involved in the development of **EigenPy**:
 - [Wolfgang Merkt](http://www.wolfgangmerkt.com/) (University of Edinburgh): ROS integration and support
 - [Sean Yen](https://www.linkedin.com/in/seanyentw) (Microsoft): Windows integration
 - [Loïc Estève](https://github.com/lesteve) (Inria): Conda integration
-- [Wilson Jallet](https://manifoldfr.github.io/) (Inria/LAAS-CNRS): core developer
+- [Wilson Jallet](https://manifoldfr.github.io/) (Inria): core developer
 - [Joris Vaillant](https://github.com/jorisv) (Inria): core developer and manager of the project
 
 If you have taken part in the development of **EigenPy**, feel free to add your name and contribution here.
