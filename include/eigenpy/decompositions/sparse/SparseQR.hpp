@@ -64,6 +64,7 @@ struct SparseQRMatrixQReturnTypeVisitor
   typedef Eigen::SparseQRMatrixQTransposeReturnType<SparseQRType>
       QTransposeType;
   typedef Eigen::SparseQRMatrixQReturnType<SparseQRType> QType;
+  typedef typename SparseQRType::QRMatrixType QRMatrixType;
   typedef Eigen::VectorXd VectorXd;
   typedef Eigen::MatrixXd MatrixXd;
 
@@ -92,9 +93,21 @@ struct SparseQRMatrixQReturnTypeVisitor
             +[](const QType& self) -> QTransposeType { return self.adjoint(); })
 
         .def(
-            "transpose", +[](const QType& self) -> QTransposeType {
+            "transpose",
+            +[](const QType& self) -> QTransposeType {
               return self.transpose();
-            });
+            })
+
+        .def(
+            "toSparse",
+            +[](QType& self) -> QRMatrixType {
+              Eigen::Index m = self.rows();
+              MatrixXd I = MatrixXd::Identity(m, m);
+              MatrixXd Q_dense = self * I;
+              return Q_dense.sparseView();
+            },
+            bp::arg("self"),
+            "Convert the Q matrix to a sparse matrix representation.");
   }
 
   static void expose() {

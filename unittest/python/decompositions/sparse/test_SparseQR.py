@@ -72,3 +72,24 @@ A_permuted = A_dense[:, P_indices]
 QtAP = Qt @ A_permuted
 R_dense = spqr.matrixR().toarray()
 assert eigenpy.is_approx(QtAP, R_dense)
+
+Q_sparse = Q.toSparse()
+R_sparse = R
+
+assert Q_sparse.shape == (dim, dim)
+
+QtQ_sparse = Q_sparse.T @ Q_sparse
+QQt_sparse = Q_sparse @ Q_sparse.T
+I_sparse = spa.identity(dim, format="csc")
+
+assert eigenpy.is_approx(QtQ_sparse.toarray(), I_sparse.toarray())
+assert eigenpy.is_approx(QQt_sparse.toarray(), I_sparse.toarray())
+
+Q_sparse_test_vec = Q_sparse @ test_vec
+assert eigenpy.is_approx(Qv, Q_sparse_test_vec)
+
+Q_sparse_test_matrix = Q_sparse @ test_matrix
+assert eigenpy.is_approx(QM, Q_sparse_test_matrix)
+
+QR_sparse = Q_sparse @ R_sparse.toarray()
+assert eigenpy.is_approx(QR_sparse, A_permuted)
