@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Add additional decompositions and solvers from Eigen ([#571](https://github.com/stack-of-tasks/eigenpy/pull/571))
+
+### Added
+
 - Docker images `ghcr.io/stack-of-tasks/eigenpy` ([#575](https://github.com/stack-of-tasks/eigenpy/pull/575))
 
 ### Changed
