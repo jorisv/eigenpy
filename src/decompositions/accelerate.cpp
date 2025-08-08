@@ -5,7 +5,7 @@
 #include "eigenpy/fwd.hpp"
 #include "eigenpy/decompositions/decompositions.hpp"
 
-#include "eigenpy/decompositions/sparse/accelerate/accelerate.hpp"
+#include "eigenpy/decompositions/sparse/accelerate/Accelerate.hpp"
 
 namespace eigenpy {
 

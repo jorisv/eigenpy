@@ -36,11 +36,11 @@
 #if defined(EIGENPY_CLANG_COMPILER) || defined(EIGENPY_GCC_COMPILER)
 #define EIGENPY_PRAGMA(x) _Pragma(#x)
 #define EIGENPY_PRAGMA_MESSAGE(the_message) \
-  EIGENPY_PRAGMA(GCC message the_message)
+  EIGENPY_PRAGMA(GCC message #the_message)
 #define EIGENPY_PRAGMA_WARNING(the_message) \
-  EIGENPY_PRAGMA(GCC warning the_message)
+  EIGENPY_PRAGMA(GCC warning #the_message)
 #define EIGENPY_PRAGMA_DEPRECATED(the_message) \
-  EIGENPY_PRAGMA_WARNING(Deprecated : the_message)
+  EIGENPY_PRAGMA_WARNING(Deprecated : #the_message)
 #define EIGENPY_PRAGMA_DEPRECATED_HEADER(old_header, new_header) \
   EIGENPY_PRAGMA_WARNING(                                        \
       Deprecated header file : #old_header has been replaced     \
