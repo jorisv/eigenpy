@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [3.12.0] - 2025-08-12
+
 ### Added
 
 - Add additional decompositions and solvers from Eigen ([#571](https://github.com/stack-of-tasks/eigenpy/pull/571))
@@ -750,7 +752,8 @@ One can now easily expose C++ struct containing Eigen objects in Python avoiding
 
 ## [1.0.0] - 2014-07-18
 
-[Unreleased]: https://github.com/stack-of-tasks/eigenpy/compare/v3.11.0...HEAD
+[Unreleased]: https://github.com/stack-of-tasks/eigenpy/compare/v3.12.0...HEAD
+[3.12.0]: https://github.com/stack-of-tasks/eigenpy/compare/v3.11.0...v3.12.0
 [3.11.0]: https://github.com/stack-of-tasks/eigenpy/compare/v3.10.3...v3.11.0
 [3.10.3]: https://github.com/stack-of-tasks/eigenpy/compare/v3.10.2...v3.10.3
 [3.10.2]: https://github.com/stack-of-tasks/eigenpy/compare/v3.10.1...v3.10.2
